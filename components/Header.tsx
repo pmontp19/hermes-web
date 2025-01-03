@@ -13,7 +13,6 @@ import { Menu, MoveRight, X } from 'lucide-react'
 import { useState } from 'react'
 import Link from 'next/link'
 import { ContentFrontmatter } from '@/lib/markdown'
-import { title } from 'process'
 
 export interface ContentItem extends ContentFrontmatter {
   slug: string

@@ -1,6 +1,5 @@
 import { getMarkdownFiles, getMarkdownBySlug } from '@/lib/markdown'
 import { FeaturesList } from '../components/features-list'
-import { LucideIcon } from 'lucide-react'
 
 export default async function IndustriesPage() {
   const industriesFiles = await getMarkdownFiles('industries')
