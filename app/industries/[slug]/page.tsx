@@ -1,33 +1,45 @@
-import { getMarkdownBySlug } from '@/lib/markdown'
+import { getMarkdownBySlug, getMarkdownFiles } from '@/lib/markdown'
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string }
-}) {
-  const slug = await Promise.resolve(params.slug)
+type IndustryPageProps = {
+  readonly params: Promise<{
+    slug: string
+  }>
+}
+
+export const generateMetadata = async ({
+  params
+}: IndustryPageProps): Promise<Metadata> => {
+  const { slug } = await params
   const { frontmatter } = await getMarkdownBySlug('industries', slug)
-  
+
+  if (!frontmatter) {
+    return {}
+  }
+
   return {
     title: frontmatter.title,
     description: frontmatter.description
   }
 }
 
-export default async function IndustryPage({
-  params,
-}: {
-  readonly params: { slug: string }
-}) {
-  const slug = await Promise.resolve(params.slug)
+export const generateStaticParams = async (): Promise<{ slug: string }[]> => {
+  const industriesFiles = await getMarkdownFiles('industries')
+  return industriesFiles.map((file) => ({
+    slug: file.replace(/\.md$/, '')
+  }))
+}
+
+const IndustryPage = async ({ params }: IndustryPageProps) => {
+  const { slug } = await params
   const { frontmatter, htmlContent } = await getMarkdownBySlug(
     'industries',
     slug
   )
 
   if (!frontmatter) {
-    notFound()
+    return notFound()
   }
 
   return (
@@ -42,3 +54,5 @@ export default async function IndustryPage({
     </main>
   )
 }
+
+export default IndustryPage

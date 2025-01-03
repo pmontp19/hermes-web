@@ -1,33 +1,45 @@
-import { getMarkdownBySlug } from '@/lib/markdown'
+import { getMarkdownBySlug, getMarkdownFiles } from '@/lib/markdown'
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string }
-}) {
-  const slug = await Promise.resolve(params.slug)
+type SolutionPageProps = {
+  readonly params: Promise<{
+    slug: string
+  }>
+}
+
+export const generateMetadata = async ({
+  params
+}: SolutionPageProps): Promise<Metadata> => {
+  const { slug } = await params
   const { frontmatter } = await getMarkdownBySlug('solutions', slug)
-  
+
+  if (!frontmatter) {
+    return {}
+  }
+
   return {
     title: frontmatter.title,
     description: frontmatter.description
   }
 }
 
-export default async function SolutionPage({
-  params,
-}: {
-  readonly params: { slug: string }
-}) {
-  const slug = await Promise.resolve(params.slug)
+export const generateStaticParams = async (): Promise<{ slug: string }[]> => {
+  const solutionsFiles = await getMarkdownFiles('solutions')
+  return solutionsFiles.map((file) => ({
+    slug: file.replace(/\.md$/, '')
+  }))
+}
+
+const SolutionPage = async ({ params }: SolutionPageProps) => {
+  const { slug } = await params
   const { frontmatter, htmlContent } = await getMarkdownBySlug(
     'solutions',
     slug
   )
 
   if (!frontmatter) {
-    notFound()
+    return notFound()
   }
 
   return (
@@ -42,3 +54,5 @@ export default async function SolutionPage({
     </main>
   )
 }
+
+export default SolutionPage
