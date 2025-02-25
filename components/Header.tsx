@@ -50,7 +50,7 @@ export const Header = ({ solutionsData, industriesData }: HeaderProps) => {
     }
   ]
 
-  const [isOpen, setOpen] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
   return (
     <header className="w-full z-40 fixed top-0 left-0 bg-background/30 backdrop-filter backdrop-blur-lg">
       <div className="container relative mx-auto min-h-20 flex gap-4 flex-row lg:grid lg:grid-cols-3 items-center">
@@ -60,13 +60,11 @@ export const Header = ({ solutionsData, industriesData }: HeaderProps) => {
               {navigationItems.map((item) => (
                 <NavigationMenuItem key={item.title}>
                   {item.href ? (
-                    <>
-                      <NavigationMenuLink asChild>
-                        <Button variant="ghost" asChild>
-                          <Link href={item.href}>{item.title}</Link>
-                        </Button>
-                      </NavigationMenuLink>
-                    </>
+                    <NavigationMenuLink asChild>
+                      <Button variant="ghost" asChild>
+                        <Link href={item.href}>{item.title}</Link>
+                      </Button>
+                    </NavigationMenuLink>
                   ) : (
                     <>
                       <NavigationMenuTrigger className="font-medium text-sm">
@@ -115,7 +113,7 @@ export const Header = ({ solutionsData, industriesData }: HeaderProps) => {
         </div>
         <div className="flex lg:justify-center">
           <Link href="/" className="font-semibold">
-            Mapache Inc
+            Context Linguistics
           </Link>
         </div>
         <div className="flex justify-end w-full gap-4">
@@ -126,10 +124,10 @@ export const Header = ({ solutionsData, industriesData }: HeaderProps) => {
           <Button>Get started</Button>
         </div>
         <div className="flex w-12 shrink lg:hidden items-end justify-end">
-          <Button variant="ghost" onClick={() => setOpen(!isOpen)}>
-            {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </Button>
-          {isOpen && (
+          <Button variant="ghost" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                      {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                    </Button>
+          {isMenuOpen && (
             <div className="absolute top-20 border-t flex flex-col w-full right-0 bg-background shadow-lg py-4 container gap-8">
               {navigationItems.map((item) => (
                 <div key={item.title}>
@@ -138,6 +136,7 @@ export const Header = ({ solutionsData, industriesData }: HeaderProps) => {
                       <Link
                         href={item.href}
                         className="flex justify-between items-center"
+                        onClick={() => setIsMenuOpen(false)}
                       >
                         <span className="text-lg">{item.title}</span>
                         <MoveRight className="w-4 h-4 stroke-1 text-muted-foreground" />
@@ -145,12 +144,12 @@ export const Header = ({ solutionsData, industriesData }: HeaderProps) => {
                     ) : (
                       <p className="text-lg">{item.title}</p>
                     )}
-                    {item.items &&
-                      item.items.map((subItem) => (
+                    { item.items?.map((subItem) => (
                         <Link
                           key={subItem.title}
                           href={subItem.href}
                           className="flex justify-between items-center"
+                          onClick={() => setIsMenuOpen(false)}
                         >
                           <span className="text-muted-foreground">
                             {subItem.title}

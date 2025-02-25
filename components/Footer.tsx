@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { ModeToggle } from '../design/mode-toggle'
 
 export const Footer = () => {
   const navigationItems = [
@@ -66,7 +65,6 @@ export const Footer = () => {
               <p className="text-lg max-w-lg leading-relaxed tracking-tight text-background/75 text-left">
                 Managing a small business today is already tough.
               </p>
-            <ModeToggle />
             </div>
 
 

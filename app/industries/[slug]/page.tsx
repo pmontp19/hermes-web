@@ -1,3 +1,4 @@
+import { MarkdownContent } from '@/components/MarkdownContent'
 import { getMarkdownBySlug, getMarkdownFiles } from '@/lib/markdown'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
@@ -42,17 +43,7 @@ const IndustryPage = async ({ params }: IndustryPageProps) => {
     return notFound()
   }
 
-  return (
-    <main className="container mx-auto">
-      <h1 className="text-4xl font-bold text-center mt-8">Industries</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <div className="p-4 border border-gray-200 rounded">
-          <h2 className="text-2xl font-bold">{frontmatter.title}</h2>
-          <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
-        </div>
-      </div>
-    </main>
-  )
+  return <MarkdownContent frontmatter={frontmatter} htmlContent={htmlContent} type="industry" />
 }
 
 export default IndustryPage

@@ -2,7 +2,7 @@
 title: "Engineering"
 slug: "engineering"
 description: "This is an example industry."
-icon: "tools"
+icon: "cog"
 ---
 
 # Example

@@ -51,25 +51,28 @@ export const FeaturesList = ({
           {features.map((feature, index) => (
             <Card
               key={index}
-              className="bg-[#1c1c1f] border-0 rounded-3xl transition-all duration-300 ease-in-out hover:scale-[1.02] hover:bg-[#252529] hover:shadow-lg hover:shadow-purple-900/20"
+              className="bg-white border rounded-3xl transition-all duration-300 ease-in-out hover:scale-[1.02] hover:shadow-lg hover:shadow-purple-900/20"
             >
               <CardHeader>
                 <div className="h-14 w-14 rounded-full bg-primary flex items-center justify-center mb-4">
                   {feature.icon && (
-                    <DynamicIcon name={feature.icon} className="h-7 w-7 text-accent" />
+                    <DynamicIcon
+                      name={feature.icon}
+                      className="h-7 w-7 text-accent"
+                    />
                   )}
                 </div>
                 <CardTitle className="text-2xl font-semibold text-primary">
                   {feature.title}
                 </CardTitle>
-                <CardDescription className="text-gray-400 text-lg">
+                <CardDescription className="text-gray-500 text-lg">
                   {feature.description}
                 </CardDescription>
               </CardHeader>
               <CardFooter>
                 <Link
-                  href="/"
-                  className="group inline-flex items-center text-[#5b9bd3] hover:text-[#7ab3e4] transition-colors text-lg"
+                  href={feature.href} 
+                  className="group inline-flex items-center transition-colors text-lg"
                 >
                   Learn more
                   <MoveRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />

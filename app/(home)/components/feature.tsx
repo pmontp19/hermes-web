@@ -22,7 +22,7 @@ export const Feature = ({
     <div className="container mx-auto">
       <div className="flex flex-col-reverse lg:flex-row gap-10 lg:items-center">
         {variant === 'imageLeft' && (
-          <div className="bg-muted rounded-md w-full aspect-video h-full flex-1">
+          <div className="w-full h-full flex-1">
             <Image
               src={image}
               alt={alt}
@@ -46,7 +46,7 @@ export const Feature = ({
         </div>
 
         {variant === 'imageRight' && (
-          <div className="bg-muted rounded-md w-full aspect-video h-full flex-1">
+          <div className="rounded-md w-full aspect-video h-full flex-1">
             <Image
               src={image}
               alt={alt}
