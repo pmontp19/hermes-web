@@ -1,11 +1,11 @@
 import { getContentItems } from '@/lib/content'
-import { Header } from './Header'
+import { Footer } from './Footer'
 
-export async function HeaderWrapper() {
+export async function FooterWrapper() {
   const [solutionsData, industriesData] = await Promise.all([
     getContentItems('solutions'),
     getContentItems('industries')
   ])
 
-  return <Header solutionsData={solutionsData} industriesData={industriesData} />
+  return <Footer solutionsData={solutionsData} industriesData={industriesData} />
 }

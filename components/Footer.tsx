@@ -1,125 +1,99 @@
-import Link from 'next/link'
+'use client'
 
-export const Footer = () => {
-  const navigationItems = [
-    {
-      title: 'Home',
-      href: '/',
-      description: ''
-    },
-    {
-      title: 'Product',
-      description: 'Managing a small business today is already tough.',
-      items: [
-        {
-          title: 'Reports',
-          href: '/reports'
-        },
-        {
-          title: 'Statistics',
-          href: '/statistics'
-        },
-        {
-          title: 'Dashboards',
-          href: '/dashboards'
-        },
-        {
-          title: 'Recordings',
-          href: '/recordings'
-        }
-      ]
-    },
-    {
-      title: 'Company',
-      description: 'Managing a small business today is already tough.',
-      items: [
-        {
-          title: 'About us',
-          href: '/about'
-        },
-        {
-          title: 'Fundraising',
-          href: '/fundraising'
-        },
-        {
-          title: 'Investors',
-          href: '/investors'
-        },
-        {
-          title: 'Contact us',
-          href: '/contact'
-        }
-      ]
-    }
-  ]
+import Link from 'next/link'
+import { Button } from './ui/button'
+import { ContentItem } from './Header'
+
+interface FooterProps {
+  solutionsData: ContentItem[]
+  industriesData: ContentItem[]
+}
+
+export const Footer = ({ solutionsData, industriesData }: FooterProps) => {
+  const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="w-full py-20 lg:py-40 bg-foreground text-background">
-      <div className="container mx-auto">
-        <div className="grid lg:grid-cols-2 gap-10 items-center">
-          <div className="flex gap-8 flex-col items-start">
-            <div className="flex gap-2 flex-col">
-              <h2 className="text-3xl md:text-5xl tracking-tighter max-w-xl font-regular text-left">
-                Mapache Inc.
-              </h2>
-              <p className="text-lg max-w-lg leading-relaxed tracking-tight text-background/75 text-left">
-                Managing a small business today is already tough.
-              </p>
-            </div>
-
-
-            <div className="flex gap-20 flex-row">
-              <div className="flex flex-col text-sm max-w-lg leading-relaxed tracking-tight text-background/75 text-left">
-                <Link href="/">Terms of service</Link>
-                <Link href="/">Privacy Policy</Link>
-              </div>
-            </div>
+    <footer className="w-full bg-muted/30 border-t" role="contentinfo">
+      <div className="container mx-auto py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="flex flex-col gap-4">
+            <h3 className="font-semibold">Context Linguistics</h3>
+            <p className="text-sm text-muted-foreground">
+              Empowering businesses with advanced linguistic solutions.
+            </p>
           </div>
-          <div className="grid lg:grid-cols-3 gap-10 items-start">
-            {navigationItems.map((item) => (
-              <div
-                key={item.title}
-                className="flex text-base gap-1 flex-col items-start"
+
+          <div className="flex flex-col gap-4">
+            <h3 className="font-semibold">Solutions</h3>
+            <nav className="flex flex-col gap-2">
+              {solutionsData.map((solution) => (
+                <Link
+                  key={solution.slug}
+                  href={`/solutions/${solution.slug}`}
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  {solution.title}
+                </Link>
+              ))}
+              <Link
+                href="/solutions"
+                className="text-sm font-semibold hover:text-foreground transition-colors"
               >
-                <div className="flex flex-col gap-2">
-                  {item.href ? (
-                    <Link
-                      href={item.href}
-                      className="flex justify-between items-center"
-                      target={
-                        item.href.includes('http') ? '_blank' : undefined
-                      }
-                      rel={
-                        item.href.includes('http') ? 'noopener noreferrer' : undefined
-                      }
-                    >
-                      <span className="text-xl">{item.title}</span>
-                    </Link>
-                  ) : (
-                    <p className="text-xl">{item.title}</p>
-                  )}
-                  {item.items &&
-                    item.items.map((subItem) => (
-                      <Link
-                        key={subItem.title}
-                        href={subItem.href}
-                        className="flex justify-between items-center"
-                        target={
-                          subItem.href.includes('http') ? '_blank' : undefined
-                        }
-                        rel={
-                          subItem.href.includes('http') ? 'noopener noreferrer' : undefined
-                        }
-                      >
-                        <span className="text-background/75">
-                          {subItem.title}
-                        </span>
-                      </Link>
-                    ))}
-                </div>
-              </div>
-            ))}
+                View all solutions
+              </Link>
+            </nav>
           </div>
+
+          <div className="flex flex-col gap-4">
+            <h3 className="font-semibold">Industries</h3>
+            <nav className="flex flex-col gap-2">
+              {industriesData.map((industry) => (
+                <Link
+                  key={industry.slug}
+                  href={`/industries/${industry.slug}`}
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  {industry.title}
+                </Link>
+              ))}
+              <Link
+                href="/industries"
+                className="text-sm font-semibold hover:text-foreground transition-colors"
+              >
+                View all industries
+              </Link>
+            </nav>
+          </div>
+
+          <div className="flex flex-col gap-4">
+            <h3 className="font-semibold">Get Started</h3>
+            <div className="flex flex-col gap-2">
+              <Button variant="outline" size="sm">
+                Book a demo
+              </Button>
+              <Button size="sm">Get started</Button>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex flex-col md:flex-row justify-between items-center mt-16 pt-8 border-t gap-4">
+          <p className="text-sm text-muted-foreground">
+            © {currentYear} Context Linguistics. All rights reserved.
+          </p>
+          <nav className="flex gap-4" aria-label="Legal">
+            <Link
+              href="/privacy"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              href="/terms"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Terms of Service
+            </Link>
+          </nav>
         </div>
       </div>
     </footer>
