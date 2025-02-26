@@ -1,4 +1,3 @@
-import { Contact } from '@/app/(home)/components/contact'
 import { Hero } from '@/app/(home)/components/hero'
 import { Stats } from '@/app/(home)/components/stats'
 import * as motion from 'motion/react-client'
