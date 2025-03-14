@@ -5,13 +5,16 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://your-website-url.com', // Replace this with your actual website URL
-  integrations: [sitemap()],
+  site: 'https://hermes-web-6g2.pages.dev/',
+
   vite: {
     plugins: [tailwindcss()]
   },
+
   image: {
     domains: [],
     remotePatterns: [{ protocol: "https" }],
-  }
+  },
+
+  integrations: [sitemap()]
 });
