@@ -1,0 +1,91 @@
+---
+import { formatDate } from '../utils/date';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  featured?: boolean;
+}
+
+const { post, featured = false } = Astro.props;
+const { title, description, pubDate, author, image, category } = post.data;
+const formattedDate = formatDate(pubDate);
+const url = `/blog/${post.slug}`;
+---
+
+{featured ? (
+  <div class="flex flex-col md:flex-row bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+    <div class="md:w-1/2">
+      {image ? (
+        <a href={url} class="block h-full">
+          <img 
+            src={image} 
+            alt={title} 
+            class="w-full h-full object-cover" 
+            style="aspect-ratio: 16/9;"
+          />
+        </a>
+      ) : (
+        <div class="bg-toast-100 h-full flex items-center justify-center p-8">
+          <span class="text-toast-600 text-xl font-semibold">TranslateHub Blog</span>
+        </div>
+      )}
+    </div>
+    <div class="p-6 md:w-1/2 flex flex-col justify-between">
+      <div>
+        <div class="flex items-center space-x-2 mb-3">
+          <span class="bg-toast-100 text-toast-600 px-3 py-1 rounded-full text-sm font-medium">{category}</span>
+          <time datetime={pubDate.toISOString()} class="text-gray-500 text-sm">{formattedDate}</time>
+        </div>
+        <a href={url} class="block mb-3">
+          <h3 class="text-2xl font-bold text-gray-900 hover:text-toast-600 transition-colors">{title}</h3>
+        </a>
+        <p class="text-gray-600 mb-4 line-clamp-3">{description}</p>
+      </div>
+      <div class="flex items-center justify-between">
+        <div class="flex items-center">
+          <div class="w-8 h-8 bg-toast-100 rounded-full flex items-center justify-center text-toast-600 font-semibold text-sm">
+            {author.charAt(0)}
+          </div>
+          <span class="ml-2 text-sm text-gray-600">{author}</span>
+        </div>
+        <a href={url} class="text-toast-500 hover:text-toast-700 font-medium">Read More →</a>
+      </div>
+    </div>
+  </div>
+) : (
+  <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow h-full flex flex-col">
+    {image ? (
+      <a href={url} class="block">
+        <img 
+          src={image} 
+          alt={title} 
+          class="w-full h-48 object-cover" 
+        />
+      </a>
+    ) : (
+      <div class="bg-toast-100 h-48 flex items-center justify-center">
+        <span class="text-toast-600 font-semibold">TranslateHub Blog</span>
+      </div>
+    )}
+    <div class="p-5 flex-1 flex flex-col">
+      <div class="flex items-center space-x-2 mb-3">
+        <span class="bg-toast-100 text-toast-600 px-2 py-0.5 rounded-full text-xs font-medium">{category}</span>
+        <time datetime={pubDate.toISOString()} class="text-gray-500 text-xs">{formattedDate}</time>
+      </div>
+      <a href={url} class="block mb-2">
+        <h3 class="text-lg font-bold text-gray-900 hover:text-toast-600 transition-colors line-clamp-2">{title}</h3>
+      </a>
+      <p class="text-gray-600 text-sm mb-4 line-clamp-2 flex-1">{description}</p>
+      <div class="flex items-center justify-between mt-auto pt-3 border-t border-gray-100">
+        <div class="flex items-center">
+          <div class="w-6 h-6 bg-toast-100 rounded-full flex items-center justify-center text-toast-600 font-semibold text-xs">
+            {author.charAt(0)}
+          </div>
+          <span class="ml-2 text-xs text-gray-600">{author}</span>
+        </div>
+        <a href={url} class="text-toast-500 hover:text-toast-700 text-sm font-medium">Read →</a>
+      </div>
+    </div>
+  </div>
+)}

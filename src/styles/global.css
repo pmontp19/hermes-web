@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@theme {
+    --color-toast-50: oklch(0.9354 0.0094 52.1681);
+    --color-toast-100: oklch(0.8701 0.0184 48.5390);
+    --color-toast-200: oklch(0.8041 0.0272 44.6946);
+    --color-toast-300: oklch(0.7392 0.0362 45.4034);
+    --color-toast-400: oklch(0.6742 0.0442 48.8326);
+    --color-toast-500: oklch(0.6097 0.0524 47.8469);
+    --color-toast-600: oklch(0.5316 0.0440 48.6999);
+    --color-toast-700: oklch(0.4519 0.0357 46.8595);
+    --color-toast-800: oklch(0.3747 0.0262 48.0078);
+    --color-toast-900: oklch(0.2945 0.0174 48.1190);
+    --color-toast-950: oklch(0.2170 0.0086 59.1908);
+  }

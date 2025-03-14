@@ -1,0 +1,220 @@
+---
+import { getCollection } from 'astro:content';
+import { formatDate } from '../utils/date';
+
+// Get the 3 most recent blog posts
+const allPosts = await getCollection('blog');
+const recentPosts = allPosts
+  .filter(post => !post.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+---
+
+<section class="py-20 bg-gray-50">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <span class="text-toast-600 font-semibold">Our Blog</span>
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mt-2 mb-4">Latest Insights & Articles</h2>
+      <p class="max-w-2xl mx-auto text-lg text-gray-600">
+        Stay updated with the latest trends, best practices, and expert advice in translation and localization.
+      </p>
+    </div>
+    
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+      {recentPosts.map((post) => (
+        <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+          {post.data.image ? (
+            <a href={`/blog/${post.slug}`} class="block">
+              <img 
+                src={post.data.image} 
+                alt={post.data.title} 
+                class="w-full h-48 object-cover" 
+              />
+            </a>
+          ) : (
+            <div class="bg-toast-50 h-48 flex items-center justify-center">
+              <span class="text-toast-600 font-semibold">TranslateHub Blog</span>
+            </div>
+          )}
+          
+          <div class="p-6">
+            <div class="flex items-center text-sm mb-2">
+              <span class="bg-toast-50 text-toast-600 px-2 py-1 rounded-full text-xs">{post.data.category}</span>
+              <span class="mx-2 text-gray-400">•</span>
+              <time datetime={post.data.pubDate.toISOString()} class="text-gray-500 text-xs">
+                {formatDate(post.data.pubDate)}
+              </time>
+            </div>
+            
+            <a href={`/blog/${post.slug}`} class="block mb-3 hover:underline">
+              <h3 class="font-bold text-lg text-gray-900">{post.data.title}</h3>
+            </a>
+            
+            <p class="text-gray-600 text-sm mb-4 line-clamp-2">
+              {post.data.description}
+            </p>
+            
+            <a 
+              href={`/blog/${post.slug}`} 
+              class="inline-flex items-center text-toast-600 font-medium hover:text-toast-700"
+            >
+              Read Article
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+    
+    <div class="text-center mb-16">
+      <a 
+        href="/blog" 
+        class="inline-flex items-center bg-toast-500 hover:bg-toast-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+      >
+        View All Articles
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" fill="none" viewBox="0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        </svg>
+      </a>
+    </div>
+
+    <!-- Interactive Newsletter Signup -->
+    <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+      <div class="p-8">
+        <div class="text-center mb-6">
+          <h3 class="text-2xl font-bold text-gray-800 mb-2">Subscribe to Our Newsletter</h3>
+          <p class="text-gray-600">Get the latest translation insights delivered to your inbox</p>
+        </div>
+
+        <form id="newsletter-form" class="space-y-4">
+          <div class="grid md:grid-cols-2 gap-4">
+            <div>
+              <input 
+                type="text" 
+                id="newsletter-name" 
+                placeholder="Your name" 
+                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-toast-400 focus:border-toast-400 outline-none"
+                required
+              />
+              <p id="name-feedback" class="text-red-500 text-sm mt-1 hidden">Please enter your name</p>
+            </div>
+            
+            <div>
+              <input 
+                type="email" 
+                id="newsletter-email" 
+                placeholder="Your email address" 
+                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-toast-400 focus:border-toast-400 outline-none"
+                required
+              />
+              <p id="email-feedback" class="text-red-500 text-sm mt-1 hidden">Please enter a valid email</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start">
+            <input 
+              type="checkbox" 
+              id="newsletter-consent" 
+              class="mt-1 h-4 w-4 text-toast-500 focus:ring-toast-400 border-gray-300 rounded" 
+              required
+            />
+            <label for="newsletter-consent" class="ml-2 text-sm text-gray-600">
+              I agree to receive marketing communications from TranslateHub. You can unsubscribe anytime.
+            </label>
+          </div>
+          <p id="consent-feedback" class="text-red-500 text-sm mt-1 hidden">Please confirm your consent</p>
+          
+          <div class="text-center">
+            <button 
+              type="submit" 
+              id="newsletter-submit"
+              class="bg-toast-500 hover:bg-toast-600 text-white font-medium py-3 px-8 rounded-lg transition-colors inline-flex items-center"
+            >
+              <span>Subscribe</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+          
+          <div id="newsletter-success" class="hidden p-4 bg-green-100 text-green-700 rounded-lg text-center">
+            Thank you for subscribing to our newsletter!
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script client:visible>
+  const newsletterForm = document.getElementById('newsletter-form');
+  const nameInput = document.getElementById('newsletter-name');
+  const emailInput = document.getElementById('newsletter-email');
+  const consentCheckbox = document.getElementById('newsletter-consent');
+  const nameFeedback = document.getElementById('name-feedback');
+  const emailFeedback = document.getElementById('email-feedback');
+  const consentFeedback = document.getElementById('consent-feedback');
+  const successMessage = document.getElementById('newsletter-success');
+  
+  // Real-time validation for email
+  if (emailInput) {
+    emailInput.addEventListener('input', () => {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (emailInput.value && !emailRegex.test(emailInput.value)) {
+        emailFeedback.textContent = 'Please enter a valid email address';
+        emailFeedback.classList.remove('hidden');
+        emailInput.classList.add('border-red-500');
+      } else {
+        emailFeedback.classList.add('hidden');
+        emailInput.classList.remove('border-red-500');
+      }
+    });
+  }
+  
+  // Form submission
+  if (newsletterForm) {
+    newsletterForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      // Reset errors
+      nameFeedback.classList.add('hidden');
+      emailFeedback.classList.add('hidden');
+      consentFeedback.classList.add('hidden');
+      
+      let isValid = true;
+      
+      // Validate name
+      if (!nameInput.value.trim()) {
+        nameFeedback.classList.remove('hidden');
+        isValid = false;
+      }
+      
+      // Validate email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailInput.value.trim() || !emailRegex.test(emailInput.value)) {
+        emailFeedback.textContent = 'Please enter a valid email address';
+        emailFeedback.classList.remove('hidden');
+        isValid = false;
+      }
+      
+      // Validate consent
+      if (!consentCheckbox.checked) {
+        consentFeedback.classList.remove('hidden');
+        isValid = false;
+      }
+      
+      // If valid, show success message
+      if (isValid) {
+        newsletterForm.reset();
+        successMessage.classList.remove('hidden');
+        
+        // Hide success message after 5 seconds
+        setTimeout(() => {
+          successMessage.classList.add('hidden');
+        }, 5000);
+      }
+    });
+  }
+</script>
