@@ -136,7 +136,6 @@ const recentPosts = allPosts
             <Button 
               type="submit" 
               variant="primary"
-              id="newsletter-submit"
               class="inline-flex items-center"
             >
               <span>Subscribe</span>
@@ -156,14 +155,14 @@ const recentPosts = allPosts
 </section>
 
 <script>
-  const newsletterForm = document.getElementById('newsletter-form');
-  const nameInput = document.getElementById('newsletter-name');
-  const emailInput = document.getElementById('newsletter-email');
-  const consentCheckbox = document.getElementById('newsletter-consent');
-  const nameFeedback = document.getElementById('name-feedback');
-  const emailFeedback = document.getElementById('email-feedback');
-  const consentFeedback = document.getElementById('consent-feedback');
-  const successMessage = document.getElementById('newsletter-success');
+  const newsletterForm = document.getElementById('newsletter-form') as HTMLFormElement;
+  const nameInput = document.getElementById('newsletter-name') as HTMLInputElement;
+  const emailInput = document.getElementById('newsletter-email') as HTMLInputElement;
+  const consentCheckbox = document.getElementById('newsletter-consent') as HTMLInputElement;
+  const nameFeedback = document.getElementById('name-feedback') as HTMLParagraphElement;
+  const emailFeedback = document.getElementById('email-feedback') as HTMLParagraphElement;
+  const consentFeedback = document.getElementById('consent-feedback') as HTMLParagraphElement;
+  const successMessage = document.getElementById('newsletter-success') as HTMLDivElement;
   
   // Real-time validation for email
   if (emailInput) {
@@ -207,19 +206,25 @@ const recentPosts = allPosts
       }
       
       // Validate consent
-      if (!consentCheckbox.checked) {
-        consentFeedback.classList.remove('hidden');
+      if (consentCheckbox && !consentCheckbox.checked) {
+        if (consentFeedback) {
+          consentFeedback.classList.remove('hidden');
+        }
         isValid = false;
       }
       
       // If valid, show success message
       if (isValid) {
         newsletterForm.reset();
-        successMessage.classList.remove('hidden');
+        if (successMessage) {
+          successMessage.classList.remove('hidden');
+        }
         
         // Hide success message after 5 seconds
         setTimeout(() => {
-          successMessage.classList.add('hidden');
+          if (successMessage) {
+            successMessage.classList.add('hidden');
+          }
         }, 5000);
       }
     });
