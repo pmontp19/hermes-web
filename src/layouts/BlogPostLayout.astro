@@ -14,9 +14,36 @@ interface Props {
 const { post } = Astro.props;
 const { title, description, pubDate, author, image, category, tags } = post.data;
 const formattedDate = formatDate(pubDate);
+
+// Construct the schema.org JSON-LD data
+const schemaData = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": title,
+  "description": description,
+  "image": image ? new URL(image, Astro.site).toString() : undefined,
+  "datePublished": pubDate.toISOString(),
+  "author": {
+    "@type": "Person",
+    "name": author
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TranslateHub",
+    "logo": {
+      "@type": "ImageObject",
+      "url": new URL("/favicon.svg", Astro.site).toString()
+    }
+  },
+  "keywords": tags?.join(", "),
+  "articleSection": category
+};
 ---
 
 <Layout title={`${title} | TranslateHub Blog`}>
+  <!-- Add JSON-LD Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
+  
   <Header />
   
   <main>

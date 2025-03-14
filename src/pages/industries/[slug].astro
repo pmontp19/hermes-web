@@ -1,13 +1,13 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
-import Contact from '../../components/Contact.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import Contact from '../../components/Contact.astro';
 
 export async function getStaticPaths() {
   const industries = await getCollection('industries');
-  return industries.map((industry: CollectionEntry<'industries'>) => ({
+  return industries.map((industry) => ({
     params: { slug: industry.slug },
     props: { industry },
   }));
@@ -19,9 +19,38 @@ interface Props {
 
 const { industry } = Astro.props;
 const { Content } = await industry.render();
+
+// Construct schema.org data for industry audience and specialized service
+const schemaData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Service",
+      "name": `Translation Services for ${industry.data.title}`,
+      "description": industry.data.description,
+      "provider": {
+        "@type": "Organization",
+        "@id": new URL("#organization", Astro.site).toString(),
+        "name": "TranslateHub"
+      },
+      "audience": {
+        "@type": "BusinessAudience",
+        "audienceType": industry.data.title
+      }
+    },
+    {
+      "@type": "Industry",
+      "name": industry.data.title,
+      "description": industry.data.description,
+      "url": new URL(Astro.url.pathname, Astro.site).toString()
+    }
+  ]
+};
 ---
 
-<Layout title={`${industry.data.title} | TranslateHub`} description={industry.data.description}>
+<Layout title={`${industry.data.title} Translation Services | TranslateHub`}>
+  <!-- Add JSON-LD Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
   <Header />
   <main class="pt-20">
     <div class="max-w-4xl mx-auto px-4 py-12">

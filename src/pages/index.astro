@@ -1,19 +1,58 @@
 ---
 import Layout from '../layouts/Layout.astro';
-
-// Component imports
 import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
-import Features from '../components/Features.astro';
 import Services from '../components/Services.astro';
-import Pricing from '../components/Pricing.astro';
+import Features from '../components/Features.astro';
 import Testimonials from '../components/Testimonials.astro';
-import BlogPreview from '../components/BlogPreview.astro';
 import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
+import Pricing from '../components/Pricing.astro';
+import BlogPreview from '../components/BlogPreview.astro';
+
+// Construct schema.org data for organization and website
+const schemaData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": new URL("#organization", Astro.site).toString(),
+      "name": "TranslateHub",
+      "url": Astro.site?.toString(),
+      "logo": {
+        "@type": "ImageObject",
+        "url": new URL("/favicon.svg", Astro.site).toString()
+      },
+      "description": "Professional translation and localization services for businesses worldwide",
+      "sameAs": [
+        "https://twitter.com/translatehub",
+        "https://linkedin.com/company/translatehub"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": new URL("#website", Astro.site).toString(),
+      "url": Astro.site?.toString(),
+      "name": "TranslateHub",
+      "publisher": {
+        "@id": new URL("#organization", Astro.site).toString()
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": new URL("/search?q={search_term_string}", Astro.site).toString()
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+  ]
+};
 ---
 
-<Layout>
+<Layout title="TranslateHub - Professional Translation Services">
+  <!-- Add JSON-LD Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
   <Header />
   <main>
     <div class="fade-in-section"><Hero /></div>

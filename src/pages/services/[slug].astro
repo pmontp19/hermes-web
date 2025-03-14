@@ -19,9 +19,28 @@ interface Props {
 
 const { service } = Astro.props;
 const { Content } = await service.render();
+
+// Construct schema.org data for service
+const schemaData = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": service.data.title,
+  "description": service.data.description,
+  "provider": {
+    "@type": "Organization",
+    "@id": new URL("#organization", Astro.site).toString(),
+    "name": "TranslateHub"
+  },
+  "areaServed": "Worldwide",
+  "url": new URL(Astro.url.pathname, Astro.site).toString(),
+  "category": "Translation Services",
+  "serviceType": service.data.title
+};
 ---
 
 <Layout title={`${service.data.title} | TranslateHub`} description={service.data.description}>
+  <!-- Add JSON-LD Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
   <Header />
   <main class="pt-20">
     <div class="max-w-4xl mx-auto px-4 py-12">
