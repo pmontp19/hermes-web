@@ -2,6 +2,7 @@
 import Layout from './Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Button from '../components/Button.astro';
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import { formatDate } from '../utils/date';
@@ -72,12 +73,14 @@ const formattedDate = formatDate(pubDate);
             <h2 class="text-lg font-semibold text-gray-800 mb-3">Related Topics</h2>
             <div class="flex flex-wrap gap-2">
               {tags.map((tag) => (
-                <a 
+                <Button 
                   href={`/blog/tag/${tag}`} 
-                  class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded-md text-sm transition-colors"
+                  variant="outline"
+                  size="sm"
+                  class="!rounded-full"
                 >
                   #{tag}
-                </a>
+                </Button>
               ))}
             </div>
           </div>
@@ -87,12 +90,9 @@ const formattedDate = formatDate(pubDate);
         <div class="mt-12 bg-toast-50 rounded-xl p-8 border border-toast-100">
           <h2 class="text-2xl font-bold text-gray-800 mb-3">Need Professional Translation Services?</h2>
           <p class="text-gray-600 mb-4">Our team of expert translators is ready to help you with your next project.</p>
-          <a 
-            href="/contact" 
-            class="inline-block bg-toast-500 hover:bg-toast-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
-          >
+          <Button href="/contact" variant="primary">
             Get a Free Quote
-          </a>
+          </Button>
         </div>
       </div>
     </article>

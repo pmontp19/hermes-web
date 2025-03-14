@@ -1,4 +1,5 @@
 ---
+import Button from './Button.astro';
 ---
 
 <section id="pricing" class="py-20 bg-gray-50">
@@ -14,9 +15,9 @@
         <!-- Basic Package -->
         <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
           <div class="p-8">
-            <h3 class="text-xl font-bold text-gray-800 mb-4">Standard</h3>
+            <h3 class="text-xl font-bold text-gray-800 mb-4">AI translation</h3>
             <div class="flex items-baseline mb-6">
-              <span class="text-4xl font-extrabold text-toast-600">$0.10</span>
+              <span class="text-4xl font-extrabold text-toast-600">$0.06</span>
               <span class="text-gray-500 ml-1">/ word</span>
             </div>
             <p class="text-gray-600 mb-6">Perfect for standard business documents and general content.</p>
@@ -42,9 +43,9 @@
             </ul>
           </div>
           <div class="px-8 pb-8">
-            <a href="#contact" class="block text-center bg-gray-100 hover:bg-gray-200 text-toast-600 font-semibold py-3 px-4 rounded-lg w-full transition-colors duration-300">
+            <Button href="#contact" variant="outline" fullWidth>
               Get a Quote
-            </a>
+            </Button>
           </div>
         </div>
         
@@ -88,13 +89,13 @@
             </ul>
           </div>
           <div class="px-8 pb-8">
-            <a href="#contact" class="block text-center bg-toast-500 hover:bg-toast-600 text-white font-semibold py-3 px-4 rounded-lg w-full transition-colors duration-300">
+            <Button href="#contact" variant="primary" fullWidth>
               Get a Quote
-            </a>
+            </Button>
           </div>
         </div>
         
-        <!-- Premium Plus Package -->
+        <!-- Enterprise Package -->
         <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
           <div class="p-8">
             <h3 class="text-xl font-bold text-gray-800 mb-4">Enterprise</h3>
@@ -130,9 +131,9 @@
             </ul>
           </div>
           <div class="px-8 pb-8">
-            <a href="#contact" class="block text-center bg-gray-100 hover:bg-gray-200 text-toast-600 font-semibold py-3 px-4 rounded-lg w-full transition-colors duration-300">
+            <Button href="#contact" variant="outline" fullWidth>
               Contact Us
-            </a>
+            </Button>
           </div>
         </div>
       </div>
@@ -144,9 +145,7 @@
             <h3 class="text-xl font-bold text-gray-800 mb-2">Need something specific?</h3>
             <p class="text-gray-600">We offer custom solutions for unique requirements. Contact us to discuss your specific needs.</p>
           </div>
-          <a href="#contact" class="bg-toast-500 hover:bg-toast-600 text-white font-semibold py-3 px-8 rounded-lg transition-colors duration-300 whitespace-nowrap">
-            Contact Us
-          </a>
+          <Button href="#contact" variant="primary">Contact Us</Button>
         </div>
       </div>
     </div>

@@ -1,6 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { formatDate } from '../utils/date';
+import Button from './Button.astro';
 
 // Get the 3 most recent blog posts
 const allPosts = await getCollection('blog');
@@ -48,38 +49,41 @@ const recentPosts = allPosts
               </time>
             </div>
             
-            <a href={`/blog/${post.slug}`} class="block mb-3 hover:underline">
+            <Button href={`/blog/${post.slug}`} variant="link" class="block mb-3">
               <h3 class="font-bold text-lg text-gray-900">{post.data.title}</h3>
-            </a>
+            </Button>
             
             <p class="text-gray-600 text-sm mb-4 line-clamp-2">
               {post.data.description}
             </p>
             
-            <a 
+            <Button 
               href={`/blog/${post.slug}`} 
-              class="inline-flex items-center text-toast-600 font-medium hover:text-toast-700"
+              variant="link"
+              class="text-toast-600 font-medium hover:text-toast-700"
             >
               Read Article
               <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
-            </a>
+            </Button>
           </div>
         </div>
       ))}
     </div>
     
     <div class="text-center mb-16">
-      <a 
+      <Button 
         href="/blog" 
-        class="inline-flex items-center bg-toast-500 hover:bg-toast-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+        variant="primary"
+        size="lg"
+        class="inline-flex items-center"
       >
         View All Articles
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" fill="none" viewBox="0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
         </svg>
-      </a>
+      </Button>
     </div>
 
     <!-- Interactive Newsletter Signup -->
@@ -129,16 +133,17 @@ const recentPosts = allPosts
           <p id="consent-feedback" class="text-red-500 text-sm mt-1 hidden">Please confirm your consent</p>
           
           <div class="text-center">
-            <button 
+            <Button 
               type="submit" 
+              variant="primary"
               id="newsletter-submit"
-              class="bg-toast-500 hover:bg-toast-600 text-white font-medium py-3 px-8 rounded-lg transition-colors inline-flex items-center"
+              class="inline-flex items-center"
             >
               <span>Subscribe</span>
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
-            </button>
+            </Button>
           </div>
           
           <div id="newsletter-success" class="hidden p-4 bg-green-100 text-green-700 rounded-lg text-center">

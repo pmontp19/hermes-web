@@ -1,4 +1,5 @@
 ---
+import Button from './Button.astro';
 ---
 
 <section class="relative pt-20 pb-32 bg-gradient-to-br from-toast-600 to-toast-800 text-white overflow-hidden">
@@ -18,19 +19,22 @@
       </p>
       
       <div class="flex flex-col sm:flex-row justify-center gap-4">
-        <a
+        <Button 
           href="#services"
-          class="bg-white text-toast-700 hover:bg-toast-50 font-medium px-8 py-4 rounded-lg transition-all transform hover:-translate-y-0.5"
+          variant="secondary"
+          size="lg"
         >
           Explore Services
-        </a>
+        </Button>
         
-        <a
+        <Button 
           href="#contact"
-          class="bg-toast-700 text-white border border-toast-500 hover:bg-toast-600 font-medium px-8 py-4 rounded-lg transition-all transform hover:-translate-y-0.5"
+          variant="primary"
+          size="lg"
+          class="bg-toast-50 hover:bg-toast-700 border border-toast-500"
         >
           Get a Quote
-        </a>
+        </Button>
       </div>
     </div>
     

@@ -2,6 +2,7 @@
 import { formatDate } from '../utils/date';
 import type { CollectionEntry } from 'astro:content';
 import { Image } from 'astro:assets';
+import Button from './Button.astro';
 
 interface Props {
   post: CollectionEntry<'blog'>;
@@ -52,7 +53,7 @@ const url = `/blog/${post.slug}`;
           </div>
           <span class="ml-2 text-sm text-gray-600">{author}</span>
         </div>
-        <a href={url} class="text-toast-500 hover:text-toast-700 font-medium">Read More →</a>
+        <Button href={url} variant="link" class="text-sm">Read More →</Button>
       </div>
     </div>
   </div>
@@ -87,7 +88,7 @@ const url = `/blog/${post.slug}`;
           </div>
           <span class="ml-2 text-xs text-gray-600">{author}</span>
         </div>
-        <a href={url} class="text-toast-500 hover:text-toast-700 text-sm font-medium">Read →</a>
+        <Button href={url} variant="link" class="text-sm">Read →</Button>
       </div>
     </div>
   </div>
