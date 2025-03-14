@@ -3,29 +3,31 @@ import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import BlogPostCard from '../../components/BlogPostCard.astro';
-import { getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 
 // Get all blog posts and sort by date
 const allPosts = await getCollection('blog');
 const sortedPosts = allPosts
-  .filter(post => !post.data.draft)
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+  .filter((post: CollectionEntry<'blog'>) => !post.data.draft)
+  .sort((a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'>) => 
+    b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+  );
 
 // Get the featured post and remaining posts
 const featuredPost = sortedPosts[0];
 const remainingPosts = sortedPosts.slice(1);
 
 // Get all unique categories
-const categories = [...new Set(allPosts.map(post => post.data.category))];
+const categories = [...new Set(allPosts.map((post: CollectionEntry<'blog'>) => post.data.category))] as string[];
 ---
 
-<Layout title="Blog | TranslateHub - Translation Services">
+<Layout title="Blog | Context - Translation Services">
   <Header />
   <main>
     <!-- Hero Section -->
-    <section class="bg-gradient-to-br from-toast-500 to-toast-900 text-white py-16">
+    <section class="bg-gradient-to-br from-toast-600 to-toast-800 text-white py-16">
       <div class="container mx-auto px-4 text-center">
-        <h1 class="text-4xl md:text-5xl font-bold mb-4">TranslateHub Blog</h1>
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">Context Blog</h1>
         <p class="text-xl md:max-w-2xl mx-auto text-toast-50">
           Expert insights, industry trends, and practical advice on translation, localization, and global communication.
         </p>
@@ -52,7 +54,7 @@ const categories = [...new Set(allPosts.map(post => post.data.category))];
             >
               All Posts
             </a>
-            {categories.map((category) => (
+            {categories.map((category: string) => (
               <a 
                 href={`/blog/category/${category.toLowerCase()}`}
                 class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-100 transition-colors"
@@ -67,7 +69,7 @@ const categories = [...new Set(allPosts.map(post => post.data.category))];
         <div>
           <h2 class="text-2xl font-bold mb-6 text-gray-800">Latest Articles</h2>
           <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {remainingPosts.map((post) => (
+            {remainingPosts.map((post: CollectionEntry<'blog'>) => (
               <BlogPostCard post={post} />
             ))}
           </div>

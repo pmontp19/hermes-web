@@ -1,6 +1,7 @@
 ---
 import { formatDate } from '../utils/date';
 import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
 
 interface Props {
   post: CollectionEntry<'blog'>;
@@ -18,9 +19,11 @@ const url = `/blog/${post.slug}`;
     <div class="md:w-1/2">
       {image ? (
         <a href={url} class="block h-full">
-          <img 
+          <Image 
             src={image} 
             alt={title} 
+            width={16}
+            height={9}
             class="w-full h-full object-cover" 
             style="aspect-ratio: 16/9;"
           />
@@ -65,7 +68,7 @@ const url = `/blog/${post.slug}`;
       </a>
     ) : (
       <div class="bg-toast-100 h-48 flex items-center justify-center">
-        <span class="text-toast-600 font-semibold">TranslateHub Blog</span>
+        <span class="text-toast-600 font-semibold">Context Blog</span>
       </div>
     )}
     <div class="p-5 flex-1 flex flex-col">

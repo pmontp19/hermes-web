@@ -1,0 +1,66 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Contact from '../../components/Contact.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+export async function getStaticPaths() {
+  const industries = await getCollection('industries');
+  return industries.map((industry: CollectionEntry<'industries'>) => ({
+    params: { slug: industry.slug },
+    props: { industry },
+  }));
+}
+
+interface Props {
+  industry: CollectionEntry<'industries'>;
+}
+
+const { industry } = Astro.props;
+const { Content } = await industry.render();
+---
+
+<Layout title={`${industry.data.title} | TranslateHub`} description={industry.data.description}>
+  <Header />
+  <main class="pt-20">
+    <div class="max-w-4xl mx-auto px-4 py-12">
+      <article class="prose prose-lg mx-auto">
+        <Content />
+      </article>
+    </div>
+    <Contact />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .prose {
+    max-width: 100%;
+  }
+  .prose h1 {
+    color: #1a202c;
+    font-size: 2.25rem;
+    margin-bottom: 2rem;
+  }
+  .prose h2 {
+    color: #2d3748;
+    font-size: 1.875rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .prose h3 {
+    color: #4a5568;
+    font-size: 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  .prose ul {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+  }
+  .prose p {
+    margin-bottom: 1.5rem;
+    line-height: 1.75;
+  }
+</style>

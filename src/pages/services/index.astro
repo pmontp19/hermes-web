@@ -1,0 +1,80 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const services = await getCollection('services');
+const sortedServices = services.sort((a: CollectionEntry<'services'>, b: CollectionEntry<'services'>) => 
+  a.data.order - b.data.order
+);
+---
+
+<Layout 
+  title="Translation Services | Context"
+  description="Professional translation services for businesses and individuals. Document translation, website localization, software localization, and more."
+>
+<Header />
+<main>
+    <section class="py-12 bg-gray-50">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+          <h1 class="text-4xl font-bold text-gray-800 mb-4">Our Translation Services</h1>
+          <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+            Comprehensive translation solutions tailored to your specific needs. Choose from our range of specialized services.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          {sortedServices.map((service: CollectionEntry<'services'>) => (
+            <a 
+              href={`/services/${service.slug}`}
+              class="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow p-8"
+            >
+              <div class="flex items-start space-x-4">
+                {service.data.icon && (
+                  <svg 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    class="h-8 w-8 text-toast-500 mt-1 flex-shrink-0" 
+                    fill="none" 
+                    viewBox="0 0 24 24" 
+                    stroke="currentColor"
+                  >
+                    <path 
+                      stroke-linecap="round" 
+                      stroke-linejoin="round" 
+                      stroke-width="2" 
+                      d={service.data.icon}
+                    />
+                  </svg>
+                )}
+                <div>
+                  <h2 class="text-2xl font-bold text-gray-800 mb-2">{service.data.title}</h2>
+                  <p class="text-gray-600 mb-4">{service.data.description}</p>
+                  <span class="text-toast-600 font-medium inline-flex items-center">
+                    Learn more
+                    <svg 
+                      xmlns="http://www.w3.org/2000/svg" 
+                      class="h-5 w-5 ml-1" 
+                      fill="none" 
+                      viewBox="0 0 24 24" 
+                      stroke="currentColor"
+                    >
+                      <path 
+                        stroke-linecap="round" 
+                        stroke-linejoin="round" 
+                        stroke-width="2" 
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>

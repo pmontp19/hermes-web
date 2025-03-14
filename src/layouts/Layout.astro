@@ -1,11 +1,20 @@
 ---
 import '../styles/global.css';
 
+const SITE = {
+  name: "Context",
+  description: "Professional translation services for businesses and individuals. Quality, speed, and privacy guaranteed."
+};
+
 interface Props {
   title?: string;
+  description?: string;
 }
 
-const { title = "TranslateHub - Professional Translation Services" } = Astro.props;
+const { 
+  title = `${SITE.name} - Professional Translation Services`,
+  description = SITE.description
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -16,7 +25,7 @@ const { title = "TranslateHub - Professional Translation Services" } = Astro.pro
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
-		<meta name="description" content="Professional translation services for businesses and individuals. Quality, speed, and privacy guaranteed." />
+		<meta name="description" content={description} />
 	</head>
 	<body class="font-sans">
 		<slot />

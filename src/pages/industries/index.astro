@@ -1,0 +1,89 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const industries = await getCollection("industries");
+const sortedIndustries = industries.sort(
+  (a: CollectionEntry<"industries">, b: CollectionEntry<"industries">) =>
+    a.data.order - b.data.order,
+);
+---
+
+<Layout
+  title="Industries We Serve | Context"
+  description="Specialized translation services for various industries including technology, finance, marketing, and more."
+>
+  <Header />
+  <main>
+    <section class="py-12 bg-gray-50">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+          <h1 class="text-4xl font-bold text-gray-800 mb-4">
+            Industries We Serve
+          </h1>
+          <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+            Industry-specific translation solutions tailored to your sector's
+            unique requirements and terminology.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          {sortedIndustries.map((industry: CollectionEntry<"industries">) => (
+              <a
+                href={`/industries/${industry.slug}`}
+                class="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow p-8"
+              >
+                <div class="flex items-start space-x-4">
+                  {industry.data.icon && (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-8 w-8 text-toast-500 mt-1 flex-shrink-0"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d={industry.data.icon}
+                      />
+                    </svg>
+                  )}
+                  <div>
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">
+                      {industry.data.title}
+                    </h2>
+                    <p class="text-gray-600 mb-4">
+                      {industry.data.description}
+                    </p>
+                    <span class="text-toast-600 font-medium inline-flex items-center">
+                      Learn more
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5 ml-1"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M9 5l7 7-7 7"
+                        />
+                      </svg>
+                    </span>
+                  </div>
+                </div>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>

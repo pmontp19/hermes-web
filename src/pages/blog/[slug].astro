@@ -5,10 +5,25 @@ import BlogPostLayout from '../../layouts/BlogPostLayout.astro';
 // Define the static paths for all blog posts
 export async function getStaticPaths() {
   const blogPosts = await getCollection('blog');
-  return blogPosts.map(post => ({
-    params: { slug: post.slug },
-    props: { post },
-  }));
+  
+  return blogPosts.map(post => {
+    // Process image path to use proper Astro image handling
+    const postData = { ...post };
+    if (postData.data.image && typeof postData.data.image === 'string') {
+      // Convert string paths to image imports for the Image component
+      if (postData.data.image.startsWith('/blog-images/')) {
+        // Get image name from path
+        const imageName = postData.data.image.split('/').pop();
+        // Use the image from public directory
+        postData.data.image = `/blog-images/${imageName}`;
+      }
+    }
+    
+    return {
+      params: { slug: post.slug },
+      props: { post: postData },
+    };
+  });
 }
 
 const { post } = Astro.props;

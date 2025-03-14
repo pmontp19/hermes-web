@@ -3,7 +3,7 @@ title: "The Complete Guide to Website Localization"
 description: "Learn how to effectively localize your website for international markets to increase your global reach and conversion rates."
 pubDate: 2023-10-20
 author: "David Chen"
-image: "/blog-images/website-localization.jpg"
+image: "/blog-images/website-localization.png"
 category: "Digital"
 tags: ["website localization", "translation", "international marketing", "global business"]
 ---

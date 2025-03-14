@@ -1,12 +1,14 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import { formatDate } from '../utils/date';
 
 // Get the 3 most recent blog posts
 const allPosts = await getCollection('blog');
 const recentPosts = allPosts
-  .filter(post => !post.data.draft)
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .filter((post: CollectionEntry<'blog'>) => !post.data.draft)
+  .sort((a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'>) => 
+    b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+  )
   .slice(0, 3);
 ---
 
@@ -33,7 +35,7 @@ const recentPosts = allPosts
             </a>
           ) : (
             <div class="bg-toast-50 h-48 flex items-center justify-center">
-              <span class="text-toast-600 font-semibold">TranslateHub Blog</span>
+              <span class="text-toast-600 font-semibold">Context Blog</span>
             </div>
           )}
           
@@ -121,7 +123,7 @@ const recentPosts = allPosts
               required
             />
             <label for="newsletter-consent" class="ml-2 text-sm text-gray-600">
-              I agree to receive marketing communications from TranslateHub. You can unsubscribe anytime.
+              I agree to receive marketing communications from Context. You can unsubscribe anytime.
             </label>
           </div>
           <p id="consent-feedback" class="text-red-500 text-sm mt-1 hidden">Please confirm your consent</p>
@@ -148,7 +150,7 @@ const recentPosts = allPosts
   </div>
 </section>
 
-<script client:visible>
+<script>
   const newsletterForm = document.getElementById('newsletter-form');
   const nameInput = document.getElementById('newsletter-name');
   const emailInput = document.getElementById('newsletter-email');
