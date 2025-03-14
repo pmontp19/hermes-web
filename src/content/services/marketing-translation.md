@@ -2,7 +2,7 @@
 title: "Marketing Translation Services"
 description: "Expert marketing translation services that help you connect with global audiences through culturally resonant, persuasive content."
 shortDescription: "Ads, campaigns and promotional materials"
-icon: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+icon: "circle-check"
 image: "/images/services/marketing-translation.jpg"
 order: 4
 ---

@@ -1,6 +1,5 @@
-// src/content/config.ts
 import { defineCollection, z } from 'astro:content';
-
+import { type Icons } from 'lucide';
 // Define a schema for blog posts
 const blogCollection = defineCollection({
   type: 'content',
@@ -24,7 +23,7 @@ const industriesAndServicesCollection = defineCollection({
     title: z.string(),
     description: z.string(),
     shortDescription: z.string(),
-    icon: z.string(),
+    icon: z.custom<Icons>((val): val is Icons => true),
     image: z.string(),
     order: z.number(),
   }),

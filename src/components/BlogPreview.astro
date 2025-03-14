@@ -1,9 +1,8 @@
 ---
-import { getCollection, type CollectionEntry } from 'astro:content';
-import { formatDate } from '../utils/date';
 import Button from './Button.astro';
+import Icon from './Icon.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
 
-// Get the 3 most recent blog posts
 const allPosts = await getCollection('blog');
 const recentPosts = allPosts
   .filter((post: CollectionEntry<'blog'>) => !post.data.draft)
@@ -11,13 +10,23 @@ const recentPosts = allPosts
     b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
   )
   .slice(0, 3);
+
+const formatDate = (date) => {
+  return new Date(date).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+};
 ---
 
 <section class="py-20 bg-gray-50">
   <div class="container mx-auto px-4">
-    <div class="text-center mb-12">
-      <span class="text-toast-600 font-semibold">Our Blog</span>
-      <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mt-2 mb-4">Latest Insights & Articles</h2>
+    <div class="text-center mb-16">
+      <span class="text-toast-600 font-semibold">Blog</span>
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mt-2 mb-4">
+        Latest Articles
+      </h2>
       <p class="max-w-2xl mx-auto text-lg text-gray-600">
         Stay updated with the latest trends, best practices, and expert advice in translation and localization.
       </p>
@@ -25,7 +34,7 @@ const recentPosts = allPosts
     
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
       {recentPosts.map((post) => (
-        <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+        <div key={post.slug} class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
           {post.data.image ? (
             <a href={`/blog/${post.slug}`} class="block">
               <img 
@@ -42,30 +51,21 @@ const recentPosts = allPosts
           
           <div class="p-6">
             <div class="flex items-center text-sm mb-2">
-              <span class="bg-toast-50 text-toast-600 px-2 py-1 rounded-full text-xs">{post.data.category}</span>
-              <span class="mx-2 text-gray-400">•</span>
-              <time datetime={post.data.pubDate.toISOString()} class="text-gray-500 text-xs">
+              <span class="bg-toast-100 text-toast-600 px-2 py-1 rounded-full text-xs">{post.data.category}</span>
+              <time datetime={post.data.pubDate.toISOString()} class="text-gray-500 text-xs ml-2">
                 {formatDate(post.data.pubDate)}
               </time>
             </div>
             
-            <Button href={`/blog/${post.slug}`} variant="link" class="block mb-3">
-              <h3 class="font-bold text-lg text-gray-900">{post.data.title}</h3>
+            <Button href={`/blog/${post.slug}`} variant="link">
+              <h3 class="text-xl font-bold text-gray-900">{post.data.title}</h3>
             </Button>
             
-            <p class="text-gray-600 text-sm mb-4 line-clamp-2">
-              {post.data.description}
-            </p>
+            <p class="text-gray-600 mt-2 mb-4">{post.data.description}</p>
             
-            <Button 
-              href={`/blog/${post.slug}`} 
-              variant="link"
-              class="text-toast-600 font-medium hover:text-toast-700"
-            >
-              Read Article
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-              </svg>
+            <Button href={`/blog/${post.slug}`} variant="link" class="inline-flex items-center text-sm">
+              Read More 
+              <Icon name="chevron-right" class="h-4 w-4 ml-1" />
             </Button>
           </div>
         </div>
@@ -80,9 +80,7 @@ const recentPosts = allPosts
         class="inline-flex items-center"
       >
         View All Articles
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" fill="none" viewBox="0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-        </svg>
+        <Icon name="arrow-right" class="h-5 w-5 ml-1" />
       </Button>
     </div>
 
@@ -139,9 +137,7 @@ const recentPosts = allPosts
               class="inline-flex items-center"
             >
               <span>Subscribe</span>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-              </svg>
+              <Icon name="chevron-right" class="h-5 w-5 ml-1" />
             </Button>
           </div>
           
@@ -164,44 +160,54 @@ const recentPosts = allPosts
   const consentFeedback = document.getElementById('consent-feedback') as HTMLParagraphElement;
   const successMessage = document.getElementById('newsletter-success') as HTMLDivElement;
   
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   // Real-time validation for email
   if (emailInput) {
     emailInput.addEventListener('input', () => {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (emailInput.value && !emailRegex.test(emailInput.value)) {
-        emailFeedback.textContent = 'Please enter a valid email address';
-        emailFeedback.classList.remove('hidden');
-        emailInput.classList.add('border-red-500');
-      } else {
+      if (emailFeedback) {
         emailFeedback.classList.add('hidden');
-        emailInput.classList.remove('border-red-500');
       }
     });
   }
-  
+
+  // Real-time validation for name
+  if (nameInput) {
+    nameInput.addEventListener('input', () => {
+      if (nameFeedback) {
+        nameFeedback.classList.add('hidden');
+      }
+    });
+  }
+
+  // Real-time validation for consent
+  if (consentCheckbox) {
+    consentCheckbox.addEventListener('change', () => {
+      if (consentFeedback) {
+        consentFeedback.classList.add('hidden');
+      }
+    });
+  }
+
   // Form submission
   if (newsletterForm) {
     newsletterForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      
-      // Reset errors
-      nameFeedback.classList.add('hidden');
-      emailFeedback.classList.add('hidden');
-      consentFeedback.classList.add('hidden');
-      
       let isValid = true;
       
       // Validate name
-      if (!nameInput.value.trim()) {
-        nameFeedback.classList.remove('hidden');
+      if (nameInput && nameInput.value.trim() === '') {
+        if (nameFeedback) {
+          nameFeedback.classList.remove('hidden');
+        }
         isValid = false;
       }
       
       // Validate email
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailInput.value.trim() || !emailRegex.test(emailInput.value)) {
-        emailFeedback.textContent = 'Please enter a valid email address';
-        emailFeedback.classList.remove('hidden');
+      if (emailInput && !emailRegex.test(emailInput.value)) {
+        if (emailFeedback) {
+          emailFeedback.classList.remove('hidden');
+        }
         isValid = false;
       }
       

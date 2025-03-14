@@ -1,0 +1,15 @@
+---
+const { name, class: className = "", size = "24", stroke = "2" } = Astro.props;
+---
+
+<i 
+  data-lucide={name}
+  class={className}
+  data-stroke-width={stroke}
+></i>
+
+<script>
+  import { createIcons, icons } from 'lucide';
+  // Initialize lucide icons
+  createIcons({icons});
+</script>

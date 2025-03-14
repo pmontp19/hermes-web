@@ -2,7 +2,7 @@
 title: "Website Localization Services"
 description: "Professional website localization services that help you reach global audiences with culturally adapted, SEO-optimized multilingual websites."
 shortDescription: "Full website content and UI localization"
-icon: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+icon: "circle-check"
 image: "/images/services/website-localization.png"
 order: 2
 ---

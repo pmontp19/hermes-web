@@ -2,7 +2,7 @@
 title: "Software Localization Services"
 description: "Expert software localization services to help you adapt your applications, software, and digital platforms for global markets."
 shortDescription: "Apps, software and digital platforms"
-icon: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+icon: "circle-check"
 image: "/images/services/software-localization.jpg"
 order: 3
 ---

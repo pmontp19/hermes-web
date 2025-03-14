@@ -1,6 +1,7 @@
 ---
 import Button from './Button.astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
+import Icon from './Icon.astro';
 
 // Get all services and sort them
 const services = await getCollection('services');
@@ -35,9 +36,7 @@ const sortedIndustries = industries
               variant="secondary"
               class="justify-start !p-2 !rounded-lg group hover:shadow-sm !bg-white hover:!bg-toast-50"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-toast-500 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={service.data.icon} />
-              </svg>
+              <Icon name={service.data.icon} class="h-6 w-6 text-toast-600 group-hover:text-toast-700" />
               <div class="ml-3">
                 <h4 class="font-semibold text-gray-800 group-hover:text-toast-700">{service.data.title.replace(" Services", "")}</h4>
                 <p class="text-gray-600 text-sm mt-1">{service.data.shortDescription}</p>
@@ -57,9 +56,7 @@ const sortedIndustries = industries
               variant="secondary"
               class="justify-start !p-2 !rounded-lg group hover:shadow-sm !bg-white hover:!bg-toast-50"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-toast-500 mt-0.5 flex-shrink-0" fill="none" viewBox="0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={industry.data.icon} />
-              </svg>
+              <Icon name={industry.data.icon} class="h-6 w-6 text-toast-500 mt-0.5 flex-shrink-0" />
               <div class="ml-3">
                 <h4 class="font-semibold text-gray-800 group-hover:text-toast-700">{industry.data.title.replace(" Translation Services", "")}</h4>
                 <p class="text-gray-600 text-sm mt-1">{industry.data.shortDescription}</p>

@@ -1,152 +1,131 @@
 ---
 import Button from './Button.astro';
+import Icon from './Icon.astro';
 ---
 
 <section id="pricing" class="py-20 bg-gray-50">
   <div class="container mx-auto px-4">
     <div class="text-center mb-16">
-      <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Transparent Pricing</h2>
-      <p class="max-w-2xl mx-auto text-lg text-gray-600">We offer competitive rates with no hidden fees.</p>
+      <span class="text-toast-600 font-semibold">Pricing</span>
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mt-2 mb-4">
+        Translation Packages
+      </h2>
+      <p class="max-w-2xl mx-auto text-lg text-gray-600">Choose the perfect translation package for your needs.</p>
     </div>
     
-    <div class="max-w-6xl mx-auto">
-      <!-- Pricing Cards Grid -->
-      <div class="grid md:grid-cols-3 gap-8 mb-12">
-        <!-- Basic Package -->
-        <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-          <div class="p-8">
-            <h3 class="text-xl font-bold text-gray-800 mb-4">AI translation</h3>
-            <div class="flex items-baseline mb-6">
-              <span class="text-4xl font-extrabold text-toast-600">$0.06</span>
-              <span class="text-gray-500 ml-1">/ word</span>
-            </div>
-            <p class="text-gray-600 mb-6">Perfect for standard business documents and general content.</p>
-            <ul class="space-y-3 mb-6">
-              <li class="flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                </svg>
-                <span class="text-gray-600">Professional translation</span>
-              </li>
-              <li class="flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                </svg>
-                <span class="text-gray-600">Basic quality check</span>
-              </li>
-              <li class="flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                </svg>
-                <span class="text-gray-600">Standard delivery</span>
-              </li>
-            </ul>
+    <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      <!-- Standard Package -->
+      <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+        <div class="p-8">
+          <h3 class="text-xl font-bold text-gray-800 mb-4">Standard</h3>
+          <div class="flex items-baseline mb-6">
+            <span class="text-4xl font-extrabold text-toast-600">$0.06</span>
+            <span class="text-gray-500 ml-1">/ word</span>
           </div>
-          <div class="px-8 pb-8">
-            <Button href="#contact" variant="outline" fullWidth>
-              Get a Quote
-            </Button>
-          </div>
+          <p class="text-gray-600 mb-6">Perfect for standard business documents and general content.</p>
+          <ul class="space-y-3 mb-6">
+            <li class="flex items-center">
+              <Icon name="check" class="h-5 w-5 text-green-500 mr-2" />
+              <span class="text-gray-600">Professional translation</span>
+            </li>
+            <li class="flex items-center">
+              <Icon name="check" class="h-5 w-5 text-green-500 mr-2" />
+              <span class="text-gray-600">Basic quality check</span>
+            </li>
+            <li class="flex items-center">
+              <Icon name="check" class="h-5 w-5 text-green-500 mr-2" />
+              <span class="text-gray-600">Standard delivery</span>
+            </li>
+          </ul>
         </div>
-        
-        <!-- Premium Package -->
-        <div class="bg-white rounded-xl shadow-xl overflow-hidden transform scale-105 border-2 border-toast-500 relative">
-          <div class="absolute top-0 left-0 right-0 bg-toast-500 text-white text-center py-1 text-sm font-semibold">
-            MOST POPULAR
-          </div>
-          <div class="p-8 pt-10">
-            <h3 class="text-xl font-bold text-gray-800 mb-4">Professional</h3>
-            <div class="flex items-baseline mb-6">
-              <span class="text-4xl font-extrabold text-toast-600">$0.15</span>
-              <span class="text-gray-500 ml-1">/ word</span>
-            </div>
-            <p class="text-gray-600 mb-6">Ideal for professional content requiring accuracy and style.</p>
-            <ul class="space-y-3 mb-6">
-              <li class="flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                </svg>
-                <span class="text-gray-600">Expert translator in your field</span>
-              </li>
-              <li class="flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                </svg>
-                <span class="text-gray-600">Editor review</span>
-              </li>
-              <li class="flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                </svg>
-                <span class="text-gray-600">Fast delivery</span>
-              </li>
-              <li class="flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                </svg>
-                <span class="text-gray-600">Terminology management</span>
-              </li>
-            </ul>
-          </div>
-          <div class="px-8 pb-8">
-            <Button href="#contact" variant="primary" fullWidth>
-              Get a Quote
-            </Button>
-          </div>
-        </div>
-        
-        <!-- Enterprise Package -->
-        <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-          <div class="p-8">
-            <h3 class="text-xl font-bold text-gray-800 mb-4">Enterprise</h3>
-            <div class="flex items-baseline mb-6">
-              <span class="text-4xl font-extrabold text-toast-600">Custom</span>
-            </div>
-            <p class="text-gray-600 mb-6">For large projects and ongoing collaboration needing specialized service.</p>
-            <ul class="space-y-3 mb-6">
-              <li class="flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                </svg>
-                <span class="text-gray-600">Dedicated project manager</span>
-              </li>
-              <li class="flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                </svg>
-                <span class="text-gray-600">Volume discounts</span>
-              </li>
-              <li class="flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                </svg>
-                <span class="text-gray-600">Custom workflows</span>
-              </li>
-              <li class="flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                </svg>
-                <span class="text-gray-600">API integration available</span>
-              </li>
-            </ul>
-          </div>
-          <div class="px-8 pb-8">
-            <Button href="#contact" variant="outline" fullWidth>
-              Contact Us
-            </Button>
-          </div>
+        <div class="px-8 pb-8">
+          <Button href="#contact" variant="outline" fullWidth>
+            Get a Quote
+          </Button>
         </div>
       </div>
       
-      <!-- Special Requirements Box -->
-      <div class="bg-toast-50 rounded-xl p-8 border border-toast-100">
-        <div class="flex flex-col md:flex-row items-center justify-between">
-          <div class="mb-6 md:mb-0 md:mr-6">
-            <h3 class="text-xl font-bold text-gray-800 mb-2">Need something specific?</h3>
-            <p class="text-gray-600">We offer custom solutions for unique requirements. Contact us to discuss your specific needs.</p>
-          </div>
-          <Button href="#contact" variant="primary">Contact Us</Button>
+      <!-- Premium Package -->
+      <div class="bg-white rounded-xl shadow-xl overflow-hidden transform scale-105 border-2 border-toast-500 relative">
+        <div class="absolute top-0 left-0 right-0 bg-toast-500 text-white text-center py-1 text-sm font-semibold">
+          MOST POPULAR
         </div>
+        <div class="p-8 pt-10">
+          <h3 class="text-xl font-bold text-gray-800 mb-4">Professional</h3>
+          <div class="flex items-baseline mb-6">
+            <span class="text-4xl font-extrabold text-toast-600">$0.15</span>
+            <span class="text-gray-500 ml-1">/ word</span>
+          </div>
+          <p class="text-gray-600 mb-6">Ideal for professional content requiring accuracy and style.</p>
+          <ul class="space-y-3 mb-6">
+            <li class="flex items-center">
+              <Icon name="check" class="h-5 w-5 text-green-500 mr-2" />
+              <span class="text-gray-600">Expert translator in your field</span>
+            </li>
+            <li class="flex items-center">
+              <Icon name="check" class="h-5 w-5 text-green-500 mr-2" />
+              <span class="text-gray-600">Editor review</span>
+            </li>
+            <li class="flex items-center">
+              <Icon name="check" class="h-5 w-5 text-green-500 mr-2" />
+              <span class="text-gray-600">Fast delivery</span>
+            </li>
+            <li class="flex items-center">
+              <Icon name="check" class="h-5 w-5 text-green-500 mr-2" />
+              <span class="text-gray-600">Terminology management</span>
+            </li>
+          </ul>
+        </div>
+        <div class="px-8 pb-8">
+          <Button href="#contact" variant="primary" fullWidth>
+            Get a Quote
+          </Button>
+        </div>
+      </div>
+      
+      <!-- Enterprise Package -->
+      <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+        <div class="p-8">
+          <h3 class="text-xl font-bold text-gray-800 mb-4">Enterprise</h3>
+          <div class="flex items-baseline mb-6">
+            <span class="text-4xl font-extrabold text-toast-600">Custom</span>
+          </div>
+          <p class="text-gray-600 mb-6">For large projects and ongoing collaboration needing specialized service.</p>
+          <ul class="space-y-3 mb-6">
+            <li class="flex items-center">
+              <Icon name="check" class="h-5 w-5 text-green-500 mr-2" />
+              <span class="text-gray-600">Dedicated project manager</span>
+            </li>
+            <li class="flex items-center">
+              <Icon name="check" class="h-5 w-5 text-green-500 mr-2" />
+              <span class="text-gray-600">Volume discounts</span>
+            </li>
+            <li class="flex items-center">
+              <Icon name="check" class="h-5 w-5 text-green-500 mr-2" />
+              <span class="text-gray-600">Custom workflows</span>
+            </li>
+            <li class="flex items-center">
+              <Icon name="check" class="h-5 w-5 text-green-500 mr-2" />
+              <span class="text-gray-600">API integration available</span>
+            </li>
+          </ul>
+        </div>
+        <div class="px-8 pb-8">
+          <Button href="#contact" variant="outline" fullWidth>
+            Contact Us
+          </Button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Special Requirements Box -->
+    <div class="bg-toast-50 rounded-xl p-8 border border-toast-100 mt-16">
+      <div class="flex flex-col md:flex-row items-center justify-between">
+        <div class="mb-6 md:mb-0 md:mr-6">
+          <h3 class="text-xl font-bold text-gray-800 mb-2">Need something specific?</h3>
+          <p class="text-gray-600">We offer custom solutions for unique requirements. Contact us to discuss your specific needs.</p>
+        </div>
+        <Button href="#contact" variant="primary">Contact Us</Button>
       </div>
     </div>
   </div>
