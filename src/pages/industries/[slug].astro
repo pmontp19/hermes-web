@@ -20,6 +20,11 @@ interface Props {
 const { industry } = Astro.props;
 const { Content } = await industry.render();
 
+// Get image path for social sharing
+const image = industry.data.image || "/images/industries-social-card.jpg";
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const title = `${industry.data.title} | Context`;
+
 // Construct schema.org data for industry audience and specialized service
 const schemaData = {
   "@context": "https://schema.org",
@@ -31,7 +36,7 @@ const schemaData = {
       "provider": {
         "@type": "Organization",
         "@id": new URL("#organization", Astro.site).toString(),
-        "name": "TranslateHub"
+        "name": "Context"
       },
       "audience": {
         "@type": "BusinessAudience",
@@ -42,15 +47,20 @@ const schemaData = {
       "@type": "Industry",
       "name": industry.data.title,
       "description": industry.data.description,
-      "url": new URL(Astro.url.pathname, Astro.site).toString()
+      "url": canonicalURL.toString()
     }
   ]
 };
 ---
 
-<Layout title={`${industry.data.title} Translation Services | TranslateHub`}>
-  <!-- Add JSON-LD Schema -->
-  <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
+<Layout 
+  title={title}
+  description={industry.data.description}
+  image={image}
+  canonicalURL={canonicalURL}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(schemaData)} slot="head" />
+  
   <Header />
   <main class="pt-20">
     <div class="max-w-4xl mx-auto px-4 py-12">

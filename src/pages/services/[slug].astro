@@ -20,6 +20,10 @@ interface Props {
 const { service } = Astro.props;
 const { Content } = await service.render();
 
+// Get image path for social sharing
+const image = service.data.image || "/images/services-social-card.jpg";
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
 // Construct schema.org data for service
 const schemaData = {
   "@context": "https://schema.org",
@@ -32,15 +36,20 @@ const schemaData = {
     "name": "TranslateHub"
   },
   "areaServed": "Worldwide",
-  "url": new URL(Astro.url.pathname, Astro.site).toString(),
+  "url": canonicalURL.toString(),
   "category": "Translation Services",
   "serviceType": service.data.title
 };
 ---
 
-<Layout title={`${service.data.title} | TranslateHub`} description={service.data.description}>
-  <!-- Add JSON-LD Schema -->
-  <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
+<Layout 
+  title={`${service.data.title} | TranslateHub`}
+  description={service.data.description}
+  image={image}
+  canonicalURL={canonicalURL}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(schemaData)} slot="head" />
+  
   <Header />
   <main class="pt-20">
     <div class="max-w-4xl mx-auto px-4 py-12">

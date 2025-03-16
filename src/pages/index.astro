@@ -10,6 +10,12 @@ import Footer from '../components/Footer.astro';
 import Pricing from '../components/Pricing.astro';
 import BlogPreview from '../components/BlogPreview.astro';
 
+// Meta tags for the home page
+const title = "Context - Professional Translation Services";
+const description = "Professional translation and localization services for businesses worldwide. Quality, speed, and privacy guaranteed across 100+ languages.";
+const image = "/images/home-social-card.jpg"; // Create a compelling image for social media shares
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
 // Construct schema.org data for organization and website
 const schemaData = {
   "@context": "https://schema.org",
@@ -17,7 +23,7 @@ const schemaData = {
     {
       "@type": "Organization",
       "@id": new URL("#organization", Astro.site).toString(),
-      "name": "TranslateHub",
+      "name": "Context",
       "url": Astro.site?.toString(),
       "logo": {
         "@type": "ImageObject",
@@ -25,34 +31,58 @@ const schemaData = {
       },
       "description": "Professional translation and localization services for businesses worldwide",
       "sameAs": [
-        "https://twitter.com/translatehub",
-        "https://linkedin.com/company/translatehub"
+        "https://twitter.com/contextranslation",
+        "https://linkedin.com/company/context-translation"
       ]
     },
     {
       "@type": "WebSite",
       "@id": new URL("#website", Astro.site).toString(),
       "url": Astro.site?.toString(),
-      "name": "TranslateHub",
+      "name": "Context",
       "publisher": {
         "@id": new URL("#organization", Astro.site).toString()
+      }
+    },
+    {
+      "@type": "Service",
+      "name": "Translation Services",
+      "description": "Professional translation services across multiple languages and industries.",
+      "provider": {
+        "@id": new URL("#organization", Astro.site).toString()
       },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": {
-          "@type": "EntryPoint",
-          "urlTemplate": new URL("/search?q={search_term_string}", Astro.site).toString()
-        },
-        "query-input": "required name=search_term_string"
+      "serviceType": "Translation Services",
+      "areaServed": "Worldwide",
+      "offers": {
+        "@type": "Offer",
+        "price": "0.06",
+        "priceCurrency": "USD",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": "0.06",
+          "priceCurrency": "USD",
+          "unitCode": "WORD",
+          "referenceQuantity": {
+            "@type": "QuantitativeValue",
+            "value": "1",
+            "unitCode": "WORD"
+          }
+        }
       }
     }
   ]
 };
 ---
 
-<Layout title="TranslateHub - Professional Translation Services">
+<Layout 
+  title={title}
+  description={description}
+  image={image}
+  canonicalURL={canonicalURL}
+>
   <!-- Add JSON-LD Schema -->
-  <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
+  <script type="application/ld+json" set:html={JSON.stringify(schemaData)} slot="head" />
+  
   <Header />
   <main>
     <div class="fade-in-section"><Hero /></div>

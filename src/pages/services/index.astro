@@ -8,14 +8,44 @@ const services = await getCollection('services');
 const sortedServices = services.sort((a: CollectionEntry<'services'>, b: CollectionEntry<'services'>) => 
   a.data.order - b.data.order
 );
+
+// Meta tags
+const title = "Professional Translation Services | Context";
+const description = "Comprehensive translation solutions for businesses and individuals. Document translation, website localization, software localization, and more.";
+const image = "/images/services-social-card.jpg"; // Create this image to showcase your services
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+// Construct schema.org data for service list
+const schemaData = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "itemListElement": sortedServices.map((service, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "item": {
+      "@type": "Service",
+      "name": service.data.title,
+      "description": service.data.description,
+      "url": new URL(`/services/${service.slug}`, Astro.site).toString(),
+      "provider": {
+        "@type": "Organization",
+        "name": "Context"
+      }
+    }
+  }))
+};
 ---
 
 <Layout 
-  title="Translation Services | Context"
-  description="Professional translation services for businesses and individuals. Document translation, website localization, software localization, and more."
+  title={title}
+  description={description}
+  image={image}
+  canonicalURL={canonicalURL}
 >
-<Header />
-<main>
+  <script type="application/ld+json" set:html={JSON.stringify(schemaData)} slot="head" />
+  
+  <Header />
+  <main>
     <section class="py-12 bg-gray-50">
       <div class="container mx-auto px-4">
         <div class="text-center mb-12">
@@ -32,22 +62,6 @@ const sortedServices = services.sort((a: CollectionEntry<'services'>, b: Collect
               class="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow p-8"
             >
               <div class="flex items-start space-x-4">
-                {service.data.icon && (
-                  <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    class="h-8 w-8 text-toast-500 mt-1 flex-shrink-0" 
-                    fill="none" 
-                    viewBox="0 0 24 24" 
-                    stroke="currentColor"
-                  >
-                    <path 
-                      stroke-linecap="round" 
-                      stroke-linejoin="round" 
-                      stroke-width="2" 
-                      d={service.data.icon}
-                    />
-                  </svg>
-                )}
                 <div>
                   <h2 class="text-2xl font-bold text-gray-800 mb-2">{service.data.title}</h2>
                   <p class="text-gray-600 mb-4">{service.data.description}</p>

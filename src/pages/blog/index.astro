@@ -18,18 +18,23 @@ const featuredPost = sortedPosts[0];
 const remainingPosts = sortedPosts.slice(1);
 const categories = [...new Set(allPosts.map((post: CollectionEntry<'blog'>) => post.data.category))] as string[];
 
+// Meta tags
+const title = "Translation & Localization Blog | Context";
+const description = "Expert insights, industry trends, and practical advice on translation, localization, and global communication for global businesses.";
+const image = "/images/blog-social-card.jpg"; // Create this image with blog-related visuals
+
 // Construct schema.org data for blog listing
 const schemaData = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
   "name": "Context Blog - Translation Services",
-  "description": "Expert insights, industry trends, and practical advice on translation, localization, and global communication.",
+  "description": description,
   "isPartOf": {
     "@type": "Blog",
     "name": "Context Blog",
     "publisher": {
       "@type": "Organization",
-      "name": "TranslateHub",
+      "name": "Context",
       "logo": {
         "@type": "ImageObject",
         "url": new URL("/favicon.svg", Astro.site).toString()
@@ -51,9 +56,14 @@ const schemaData = {
 };
 ---
 
-<Layout title="Blog | Context - Translation Services">
-  <!-- Add JSON-LD Schema -->
-  <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
+<Layout 
+  title={title}
+  description={description}
+  image={image}
+  type="website"
+>
+  <script type="application/ld+json" set:html={JSON.stringify(schemaData)} slot="head" />
+  
   <Header />
   <main>
     <!-- Hero Section -->

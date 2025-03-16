@@ -2,8 +2,8 @@
 title: "Machine Translation vs. Human Translation: When to Use Each"
 description: "A comprehensive comparison of machine and human translation approaches, helping you choose the right solution for your specific needs."
 pubDate: 2023-11-05
-author: "Sarah Johnson"
-image: "/blog-images/machine-vs-human.png"
+cover:
+  src: ./machine-vs-human.png
 category: "Technology"
 tags: ["machine translation", "human translation", "AI", "language technology", "translation quality"]
 ---

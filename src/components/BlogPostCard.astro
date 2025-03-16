@@ -1,96 +1,112 @@
 ---
-import { formatDate } from '../utils/date';
-import type { CollectionEntry } from 'astro:content';
-import { Image } from 'astro:assets';
-import Button from './Button.astro';
-import Icon from './Icon.astro';
+import { formatDate } from "../utils/date";
+import type { CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+import Button from "./Button.astro";
+import Icon from "./Icon.astro";
 
 interface Props {
-  post: CollectionEntry<'blog'>;
+  post: CollectionEntry<"blog">;
   featured?: boolean;
 }
 
 const { post, featured = false } = Astro.props;
-const { title, description, pubDate, author, image, category } = post.data;
+const { title, description, pubDate, author, cover, category } = post.data;
 const formattedDate = formatDate(pubDate);
 const url = `/blog/${post.slug}`;
 ---
 
-{featured ? (
-  <div class="flex flex-col md:flex-row bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-    <div class="md:w-1/2">
-      {image ? (
-        <a href={url} class="block h-full">
-          <Image 
-            src={image} 
-            alt={title} 
-            width={16}
-            height={9}
-            class="w-full h-full object-cover" 
-            style="aspect-ratio: 16/9;"
+{
+  featured ? (
+    <div class="flex flex-col md:flex-row bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+      <div class="md:w-1/2">
+        {cover ? (
+          <a href={url} class="block h-full">
+            <Image
+              src={cover.src}
+              alt={cover.alt || title}
+              width={800}
+              height={450}
+              class="w-full h-full object-cover"
+              style="aspect-ratio: 16/9;"
+            />
+          </a>
+        ) : (
+          <div class="bg-toast-100 h-full flex items-center justify-center p-8">
+            <span class="text-toast-600 text-xl font-semibold">
+              TranslateHub Blog
+            </span>
+          </div>
+        )}
+      </div>
+      <div class="p-6 md:w-1/2 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center space-x-2 mb-3">
+            <span class="bg-toast-100 text-toast-600 px-3 py-1 rounded-full text-sm font-medium">
+              {category}
+            </span>
+            <time
+              datetime={pubDate.toISOString()}
+              class="text-gray-500 text-sm"
+            >
+              {formattedDate}
+            </time>
+          </div>
+          <a href={url} class="block mb-3">
+            <h3 class="text-2xl font-bold text-gray-900 hover:text-toast-600 transition-colors">
+              {title}
+            </h3>
+          </a>
+          <p class="text-gray-600 mb-4 line-clamp-3">{description}</p>
+        </div>
+        <div class="flex items-center justify-between">
+          <div class="flex items-center"></div>
+          <Button href={url} variant="link" class="text-sm">
+            Read More <Icon name="chevron-right" class="inline h-4 w-4 ml-1" />
+          </Button>
+        </div>
+      </div>
+    </div>
+  ) : (
+    <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow h-full flex flex-col">
+      {cover ? (
+        <a href={url} class="block">
+          <Image
+            src={cover.src}
+            alt={cover.alt || title}
+            width={400}
+            height={225}
+            class="w-full h-48 object-cover"
           />
         </a>
       ) : (
-        <div class="bg-toast-100 h-full flex items-center justify-center p-8">
-          <span class="text-toast-600 text-xl font-semibold">TranslateHub Blog</span>
+        <div class="bg-toast-100 h-48 flex items-center justify-center">
+          <span class="text-toast-600 font-semibold">Context Blog</span>
         </div>
       )}
-    </div>
-    <div class="p-6 md:w-1/2 flex flex-col justify-between">
-      <div>
+      <div class="p-5 flex-1 flex flex-col">
         <div class="flex items-center space-x-2 mb-3">
-          <span class="bg-toast-100 text-toast-600 px-3 py-1 rounded-full text-sm font-medium">{category}</span>
-          <time datetime={pubDate.toISOString()} class="text-gray-500 text-sm">{formattedDate}</time>
+          <span class="bg-toast-100 text-toast-600 px-2 py-0.5 rounded-full text-xs font-medium">
+            {category}
+          </span>
+          <time datetime={pubDate.toISOString()} class="text-gray-500 text-xs">
+            {formattedDate}
+          </time>
         </div>
-        <a href={url} class="block mb-3">
-          <h3 class="text-2xl font-bold text-gray-900 hover:text-toast-600 transition-colors">{title}</h3>
+        <a href={url} class="block mb-2">
+          <h3 class="text-lg font-bold text-gray-900 hover:text-toast-600 transition-colors line-clamp-2">
+            {title}
+          </h3>
         </a>
-        <p class="text-gray-600 mb-4 line-clamp-3">{description}</p>
-      </div>
-      <div class="flex items-center justify-between">
-        <div class="flex items-center">
-          <div class="w-8 h-8 bg-toast-100 rounded-full flex items-center justify-center text-toast-600 font-semibold text-sm">
-            {author.charAt(0)}
-          </div>
-          <span class="ml-2 text-sm text-gray-600">{author}</span>
+        <p class="text-gray-600 text-sm mb-4 line-clamp-2 flex-1">
+          {description}
+        </p>
+        <div class="flex items-center justify-between mt-auto pt-3 border-t border-gray-100">
+          <Button href={url} variant="link" class="text-sm">
+            Read <Icon name="chevron-right" class="inline h-4 w-4 ml-1" />
+          </Button>
         </div>
-        <Button href={url} variant="link" class="text-sm">Read More <Icon name="chevron-right" class="inline h-4 w-4 ml-1" /></Button>
       </div>
     </div>
-  </div>
-) : (
-  <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow h-full flex flex-col">
-    {image ? (
-      <a href={url} class="block">
-        <img 
-          src={image} 
-          alt={title} 
-          class="w-full h-48 object-cover" 
-        />
-      </a>
-    ) : (
-      <div class="bg-toast-100 h-48 flex items-center justify-center">
-        <span class="text-toast-600 font-semibold">Context Blog</span>
-      </div>
-    )}
-    <div class="p-5 flex-1 flex flex-col">
-      <div class="flex items-center space-x-2 mb-3">
-        <span class="bg-toast-100 text-toast-600 px-2 py-0.5 rounded-full text-xs font-medium">{category}</span>
-        <time datetime={pubDate.toISOString()} class="text-gray-500 text-xs">{formattedDate}</time>
-      </div>
-      <a href={url} class="block mb-2">
-        <h3 class="text-lg font-bold text-gray-900 hover:text-toast-600 transition-colors line-clamp-2">{title}</h3>
-      </a>
-      <p class="text-gray-600 text-sm mb-4 line-clamp-2 flex-1">{description}</p>
-      <div class="flex items-center justify-between mt-auto pt-3 border-t border-gray-100">
-        <div class="flex items-center">
-          <div class="w-6 h-6 bg-toast-100 rounded-full flex items-center justify-center text-toast-600 font-semibold text-xs">
-            {author.charAt(0)}
-          </div>
-          <span class="ml-2 text-xs text-gray-600">{author}</span>
-        </div>
-        <Button href={url} variant="link" class="text-sm">Read <Icon name="chevron-right" class="inline h-4 w-4 ml-1" /></Button>
-      </div>
-    </div>
-  </div>
-)}
+  )
+}

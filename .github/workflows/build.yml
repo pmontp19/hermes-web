@@ -1,0 +1,53 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+    branches:
+      - main
+
+  workflow_dispatch:
+
+env:
+  BUILD_PATH: "."
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup npm
+        uses: npm/action-setup@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: ${{ env.BUILD_PATH }}/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: ${{ env.BUILD_PATH }}
+
+      - name: Check with Astro
+        run: |
+          npm astro check
+
+      # - name: Run tests
+      #   run: |
+      #     npm coverage
+
+      # - name: Upload coverage reports to Codecov
+      #   uses: codecov/codecov-action@v4.5.0
+      #   with:
+      #     token: ${{ secrets.CODECOV_TOKEN }}

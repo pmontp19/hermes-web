@@ -12,7 +12,7 @@ interface Props {
 }
 
 const { post } = Astro.props;
-const { title, description, pubDate, author, image, category, tags } = post.data;
+const { title, description, pubDate, cover, category, tags } = post.data;
 const formattedDate = formatDate(pubDate);
 
 // Construct the schema.org JSON-LD data
@@ -21,15 +21,15 @@ const schemaData = {
   "@type": "BlogPosting",
   "headline": title,
   "description": description,
-  "image": image ? new URL(image, Astro.site).toString() : undefined,
+  "image": cover ? new URL(cover.src.src, Astro.site).toString() : undefined,
   "datePublished": pubDate.toISOString(),
   "author": {
     "@type": "Person",
-    "name": author
+    "name": "Context Team"
   },
   "publisher": {
     "@type": "Organization",
-    "name": "TranslateHub",
+    "name": "Context",
     "logo": {
       "@type": "ImageObject",
       "url": new URL("/favicon.svg", Astro.site).toString()
@@ -38,16 +38,49 @@ const schemaData = {
   "keywords": tags?.join(", "),
   "articleSection": category
 };
+
+// Get canonical URL
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
-<Layout title={`${title} | TranslateHub Blog`}>
-  <!-- Add JSON-LD Schema -->
-  <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
+<Layout 
+  title={`${title} | Context Blog`}
+  description={description}
+  image={cover?.src.src}
+  type="article"
+  publishDate={pubDate}
+  canonicalURL={canonicalURL}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(schemaData)} slot="head" />
   
   <Header />
   
+  {cover && (
+    <div class="w-full bg-gray-900 overflow-hidden">
+      <div class="relative h-[40vh] md:h-[50vh] lg:h-[60vh] max-h-[600px]">
+        <Image 
+          src={cover.src} 
+          alt={cover.alt || title}
+          width={1920}
+          height={1080}
+          class="w-full h-full object-cover opacity-80" 
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 right-0 p-8 md:p-12 max-w-4xl mx-auto">
+          <div class="flex items-center space-x-2 mb-4">
+            <span class="bg-toast-100 text-toast-600 px-3 py-1 rounded-full text-sm font-medium">{category}</span>
+            <span class="text-white">•</span>
+            <time datetime={pubDate.toISOString()} class="text-white text-sm">{formattedDate}</time>
+          </div>
+          <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">{title}</h1>
+          <p class="text-xl text-gray-200 mb-6 max-w-3xl">{description}</p>
+        </div>
+      </div>
+    </div>
+  )}
+  
   <main>
-    <!-- Breadcrumb -->
+    <!-- Breadcrumb - Moved back below the cover image -->
     <div class="bg-gray-100 py-2">
       <div class="container mx-auto px-4">
         <div class="flex items-center text-sm">
@@ -63,29 +96,17 @@ const schemaData = {
     <!-- Article Header -->
     <article class="container mx-auto px-4 py-8">
       <div class="max-w-4xl mx-auto">
-        <div class="mb-8">
-          <div class="flex items-center space-x-2 mb-4">
-            <span class="bg-toast-100 text-toast-600 px-3 py-1 rounded-full text-sm font-medium">{category}</span>
-            <span class="text-gray-500">•</span>
-            <time datetime={pubDate.toISOString()} class="text-gray-500 text-sm">{formattedDate}</time>
-          </div>
-          
-          <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">{title}</h1>
-          <p class="text-xl text-gray-600 mb-6">{description}</p>
-          
-          <div class="flex items-center">
-            <div class="w-10 h-10 bg-toast-100 rounded-full flex items-center justify-center text-toast-600 font-semibold">
-              {author.charAt(0)}
+        {!cover && (
+          <div class="mb-8">
+            <div class="flex items-center space-x-2 mb-4">
+              <span class="bg-toast-100 text-toast-600 px-3 py-1 rounded-full text-sm font-medium">{category}</span>
+              <span class="text-gray-500">•</span>
+              <time datetime={pubDate.toISOString()} class="text-gray-500 text-sm">{formattedDate}</time>
             </div>
-            <div class="ml-3">
-              <p class="text-gray-900 font-medium">{author}</p>
-            </div>
-          </div>
-        </div>
-        
-        {image && (
-          <div class="mb-10 rounded-xl overflow-hidden">
-            <Image src={image} alt={title} width={1200} height={630} class="w-full h-auto object-cover" />
+            
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">{title}</h1>
+            <p class="text-xl text-gray-600 mb-6">{description}</p>
+            
           </div>
         )}
         

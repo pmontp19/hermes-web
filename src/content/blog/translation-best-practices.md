@@ -2,8 +2,8 @@
 title: "10 Best Practices for Successful Document Translation Projects"
 description: "Learn the top strategies to ensure your document translation projects are completed efficiently with high quality results."
 pubDate: 2023-09-15
-author: "Maria Rodriguez"
-image: "/blog-images/document-translation.png"
+cover: 
+  src: ./document-translation.jpg
 category: "Business"
 tags: ["translation", "document translation", "best practices", "localization"]
 ---

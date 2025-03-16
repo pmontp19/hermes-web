@@ -10,12 +10,42 @@ const sortedIndustries = industries.sort(
   (a: CollectionEntry<"industries">, b: CollectionEntry<"industries">) =>
     a.data.order - b.data.order,
 );
+
+// Meta tags
+const title = "Industries We Serve | Context";
+const description = "Specialized translation services for various industries including technology, finance, marketing, healthcare, and more with industry-specific terminology expertise.";
+const image = "/images/industries-social-card.jpg"; // Create this image to showcase your industry focus
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+// Construct schema.org data for industry list
+const schemaData = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "itemListElement": sortedIndustries.map((industry, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "item": {
+      "@type": "Service",
+      "name": industry.data.title,
+      "description": industry.data.description,
+      "url": new URL(`/industries/${industry.slug}`, Astro.site).toString(),
+      "provider": {
+        "@type": "Organization",
+        "name": "Context"
+      }
+    }
+  }))
+};
 ---
 
 <Layout
-  title="Industries We Serve | Context"
-  description="Specialized translation services for various industries including technology, finance, marketing, and more."
+  title={title}
+  description={description}
+  image={image}
+  canonicalURL={canonicalURL}
 >
+  <script type="application/ld+json" set:html={JSON.stringify(schemaData)} slot="head" />
+  
   <Header />
   <main>
     <section class="py-12 bg-gray-50">
@@ -36,7 +66,7 @@ const sortedIndustries = industries.sort(
                 href={`/industries/${industry.slug}`}
                 class="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow p-8"
               >
-                <div class="flex items-start space-x-4">
+                <div class="flex-1 items-start space-4">
                   {industry.data.icon && (
                     <Icon
                       name={industry.data.icon}
