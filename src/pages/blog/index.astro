@@ -48,9 +48,9 @@ const schemaData = {
     "datePublished": post.data.pubDate.toISOString(),
     "author": {
       "@type": "Person",
-      "name": post.data.author
+      "name": "Context Team"
     },
-    "image": post.data.image ? new URL(post.data.image, Astro.site).toString() : undefined,
+    "image": post.data.cover.src ? new URL(post.data.cover.src.src, Astro.site).toString() : undefined,
     "url": new URL(`/blog/${post.slug}`, Astro.site).toString()
   }))
 };
