@@ -1,0 +1,159 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import { getTranslation, type Locale } from '../../../utils/i18n';
+
+// Generate pages for all locales except default
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'es' } },
+    { params: { lang: 'ca' } },
+    { params: { lang: 'fr' } },
+    { params: { lang: 'de' } },
+  ];
+}
+
+const { lang } = Astro.params as { lang: Locale };
+
+// Get all services and sort them
+const services = await getCollection('services');
+const sortedServices = services.sort((a: CollectionEntry<'services'>, b: CollectionEntry<'services'>) => 
+  a.data.order - b.data.order
+);
+
+// Translations for page content
+const translations = {
+  es: {
+    title: "Servicios Profesionales de Traducción | Context",
+    description: "Soluciones integrales de traducción para empresas y particulares. Traducción de documentos, localización de sitios web, localización de software y más.",
+    pageTitle: "Nuestros Servicios de Traducción",
+    pageSubtitle: "Soluciones de traducción integrales adaptadas a sus necesidades específicas. Elija entre nuestra gama de servicios especializados."
+  },
+  ca: {
+    title: "Serveis Professionals de Traducció | Context",
+    description: "Solucions integrals de traducció per a empreses i particulars. Traducció de documents, localització de llocs web, localització de programari i més.",
+    pageTitle: "Els Nostres Serveis de Traducció",
+    pageSubtitle: "Solucions de traducció integrals adaptades a les vostres necessitats específiques. Trieu entre la nostra gamma de serveis especialitzats."
+  },
+  fr: {
+    title: "Services Professionnels de Traduction | Context",
+    description: "Solutions de traduction complètes pour entreprises et particuliers. Traduction de documents, localisation de sites web, localisation de logiciels et plus encore.",
+    pageTitle: "Nos Services de Traduction",
+    pageSubtitle: "Des solutions de traduction complètes adaptées à vos besoins spécifiques. Choisissez parmi notre gamme de services spécialisés."
+  },
+  de: {
+    title: "Professionelle Übersetzungsdienste | Context",
+    description: "Umfassende Übersetzungslösungen für Unternehmen und Privatpersonen. Dokumentübersetzung, Website-Lokalisierung, Software-Lokalisierung und mehr.",
+    pageTitle: "Unsere Übersetzungsdienste",
+    pageSubtitle: "Umfassende Übersetzungslösungen, die auf Ihre spezifischen Bedürfnisse zugeschnitten sind. Wählen Sie aus unserer Palette spezialisierter Dienstleistungen."
+  }
+};
+
+// English fallback
+const defaultTexts = {
+  title: "Professional Translation Services | Context",
+  description: "Comprehensive translation solutions for businesses and individuals. Document translation, website localization, software localization, and more.",
+  pageTitle: "Our Translation Services",
+  pageSubtitle: "Comprehensive translation solutions tailored to your specific needs. Choose from our range of specialized services."
+};
+
+// Use translations based on language, with fallback to English
+const t = translations[lang] || defaultTexts;
+
+// Meta tags
+const title = t.title;
+const description = t.description;
+const image = "/images/services-social-card.jpg";
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+// Helper to translate button text
+function getLearnMoreText(lang: Locale) {
+  const texts = {
+    es: 'Más información',
+    ca: 'Més informació',
+    fr: 'En savoir plus',
+    de: 'Mehr erfahren',
+    en: 'Learn more'
+  };
+  return texts[lang] || 'Learn more';
+}
+
+// Construct schema.org data for service list
+const schemaData = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "itemListElement": sortedServices.map((service, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "item": {
+      "@type": "Service",
+      "name": service.data.title,
+      "description": service.data.description,
+      "url": new URL(`/${lang}/services/${service.slug}`, Astro.site).toString(),
+      "provider": {
+        "@type": "Organization",
+        "name": "Context"
+      }
+    }
+  }))
+};
+---
+
+<Layout 
+  title={title}
+  description={description}
+  image={image}
+  canonicalURL={canonicalURL}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(schemaData)} slot="head" />
+  
+  <Header />
+  <main>
+    <section class="py-12 bg-gray-50">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+          <h1 class="text-4xl font-bold text-gray-800 mb-4">{t.pageTitle}</h1>
+          <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+            {t.pageSubtitle}
+          </p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          {sortedServices.map((service: CollectionEntry<'services'>) => (
+            <a 
+              href={`/${lang}/services/${service.slug}`}
+              class="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow p-8"
+            >
+              <div class="flex items-start space-x-4">
+                <div>
+                  <h2 class="text-2xl font-bold text-gray-800 mb-2">{service.data.title}</h2>
+                  <p class="text-gray-600 mb-4">{service.data.description}</p>
+                  <span class="text-toast-600 font-medium inline-flex items-center">
+                    {getLearnMoreText(lang)}
+                    <svg 
+                      xmlns="http://www.w3.org/2000/svg" 
+                      class="h-5 w-5 ml-1" 
+                      fill="none" 
+                      viewBox="0 0 24 24" 
+                      stroke="currentColor"
+                    >
+                      <path 
+                        stroke-linecap="round" 
+                        stroke-linejoin="round" 
+                        stroke-width="2" 
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>

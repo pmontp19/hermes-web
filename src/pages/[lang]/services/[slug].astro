@@ -1,0 +1,109 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import Layout from '../../../layouts/Layout.astro';
+import Contact from '../../../components/Contact.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import { type Locale } from '../../../utils/i18n';
+
+export async function getStaticPaths() {
+  const services = await getCollection('services');
+  const locales: Locale[] = ['es', 'ca', 'fr', 'de'];
+  
+  return services.flatMap((service: CollectionEntry<'services'>) => 
+    locales.map(lang => ({
+      params: { lang, slug: service.slug },
+      props: { service, lang },
+    }))
+  );
+}
+
+interface Props {
+  service: CollectionEntry<'services'>;
+  lang: Locale;
+}
+
+const { service, lang } = Astro.props;
+const { Content } = await service.render();
+
+// Get image path for social sharing
+const image = service.data.image || "/images/services-social-card.jpg";
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+// Use localized title formats
+const titleText = {
+  en: `${service.data.title} | Context`,
+  es: `${service.data.title} | Context`,
+  ca: `${service.data.title} | Context`,
+  fr: `${service.data.title} | Context`,
+  de: `${service.data.title} | Context`,
+}[lang] || `${service.data.title} | Context`;
+
+// Construct schema.org data for service
+const schemaData = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": service.data.title,
+  "description": service.data.description,
+  "provider": {
+    "@type": "Organization",
+    "@id": new URL("#organization", Astro.site).toString(),
+    "name": "Context"
+  },
+  "areaServed": "Worldwide",
+  "url": canonicalURL.toString(),
+  "category": "Translation Services",
+  "serviceType": service.data.title
+};
+---
+
+<Layout 
+  title={titleText}
+  description={service.data.description}
+  image={image}
+  canonicalURL={canonicalURL}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(schemaData)} slot="head" />
+  
+  <Header />
+  <main class="pt-20">
+    <div class="max-w-4xl mx-auto px-4 py-12">
+      <article class="prose prose-lg mx-auto">
+        <Content />
+      </article>
+    </div>
+    <Contact />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .prose {
+    max-width: 100%;
+  }
+  .prose h1 {
+    color: #1a202c;
+    font-size: 2.25rem;
+    margin-bottom: 2rem;
+  }
+  .prose h2 {
+    color: #2d3748;
+    font-size: 1.875rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .prose h3 {
+    color: #4a5568;
+    font-size: 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  .prose ul {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+  }
+  .prose p {
+    margin-bottom: 1.5rem;
+    line-height: 1.75;
+  }
+</style>

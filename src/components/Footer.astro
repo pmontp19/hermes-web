@@ -1,6 +1,7 @@
 ---
 import Button from './Button.astro';
 import Icon from './Icon.astro';
+import LanguageSwitcher from './LanguageSwitcher.astro';
 
 const currentYear = new Date().getFullYear();
 ---
@@ -74,13 +75,15 @@ const currentYear = new Date().getFullYear();
     <!-- Divider -->
     <div class="border-t border-toast-400 my-8"></div>
     
-    <!-- Copyright & Legal -->
+    <!-- Copyright, Legal & Language Switcher -->
     <div class="flex flex-col md:flex-row justify-between items-center">
       <p class="text-toast-100 mb-4 md:mb-0">&copy; {currentYear} Context. All rights reserved.</p>
-      <div class="flex space-x-6">
-        <Button href="#" variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">Privacy Policy</Button>
-        <Button href="#" variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">Terms of Service</Button>
-        <Button href="#" variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">Cookie Policy</Button>
+      <div class="flex flex-col sm:flex-row items-center gap-4">
+        <div class="flex space-x-6">
+          <Button href="/legal/privacy-cookie-policy" variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">Privacy Policy</Button>
+          <Button href="/legal/legal-mentions" variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">Legal Mentions</Button>
+        </div>
+        <LanguageSwitcher class="mt-4 sm:mt-0 sm:ml-6" />
       </div>
     </div>
   </div>

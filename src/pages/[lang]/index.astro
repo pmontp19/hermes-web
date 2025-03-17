@@ -1,21 +1,26 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
-import Hero from '../components/Hero.astro';
-import Services from '../components/Services.astro';
-import Features from '../components/Features.astro';
-import Testimonials from '../components/Testimonials.astro';
-import Contact from '../components/Contact.astro';
-import Footer from '../components/Footer.astro';
-import Pricing from '../components/Pricing.astro';
-import BlogPreview from '../components/BlogPreview.astro';
-import Button from '../components/Button.astro';
-import { defaultLocale, type Locale } from '../utils/i18n';
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Services from '../../components/Services.astro';
+import Features from '../../components/Features.astro';
+import Testimonials from '../../components/Testimonials.astro';
+import Contact from '../../components/Contact.astro';
+import Footer from '../../components/Footer.astro';
+import Pricing from '../../components/Pricing.astro';
+import BlogPreview from '../../components/BlogPreview.astro';
+import Button from '../../components/Button.astro';
+import { supportedLocales, defaultLocale, type Locale } from '../../utils/i18n';
 
-// Default locale is handled by this route
-const lang = defaultLocale;
+// Generate pages for all locales except the default (which is handled by the root index.astro)
+export function getStaticPaths() {
+  return supportedLocales
+    .filter(locale => locale !== defaultLocale)
+    .map(lang => ({ params: { lang } }));
+}
 
-// Translations for headings
+const { lang } = Astro.params as { lang: Locale };
+
+// Import the same translations used in the root index.astro
 const translations = {
   en: {
     title: "Context - Professional Translation Services",
@@ -59,8 +64,8 @@ const translations = {
   }
 };
 
-// Use translations based on language (for English default locale)
-const t = translations[lang];
+// Use translations based on language, with fallback to English
+const t = translations[lang] || translations[defaultLocale];
 
 // Meta tags for the home page
 const title = t.title;
@@ -68,7 +73,7 @@ const description = t.description;
 const image = "/images/home-social-card.jpg";
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-// Construct schema.org data for organization and website
+// Construct schema.org data
 const schemaData = {
   "@context": "https://schema.org",
   "@graph": [
@@ -199,7 +204,7 @@ const schemaData = {
   }
 
   .grid-animation {
-    background-image: url('../assets/background.svg');
+    background-image: url('../../assets/background.svg');
     background-size: cover;
     opacity: 0.1;
     width: 100%;
