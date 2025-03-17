@@ -30,8 +30,20 @@ const industriesAndServicesCollection = defineCollection({
   }),
 });
 
+// Legal pages collection
+const legalCollection = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    lastUpdated: z.date(),
+    order: z.number(),
+  }),
+});
+
 export const collections = {
   'blog': blogCollection,
   'industries': industriesAndServicesCollection,
   'services': industriesAndServicesCollection,
+  'legal': legalCollection,
 };
