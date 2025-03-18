@@ -1,181 +1,47 @@
 ---
 import Icon from './Icon.astro';
-import { getLocaleFromURL, getTranslation, type Locale } from '../utils/i18n';
+import { getLocaleFromURL, type Locale } from '../utils/i18n';
+import { translations } from '../utils/translations';
 
 // Get current locale from URL
 const currentLocale = getLocaleFromURL(Astro.url.pathname) as Locale;
 
-// Get translations for the section
-const sectionTitle = getTranslation('features.title', currentLocale);
-const sectionSubtitle = getTranslation('features.subtitle', currentLocale);
+// Get translations from the centralized file
+const t = translations[currentLocale];
 
-// Feature translations
-const featureTranslations = {
-  'en': [
-    {
-      icon: 'globe-2',
-      title: 'Native Translators',
-      description: 'All translations are handled by professionals who are native speakers with subject matter expertise in your industry.'
-    },
-    {
-      icon: 'check-circle',
-      title: 'Quality Assurance',
-      description: 'Rigorous quality control with multiple review stages ensures accuracy and consistency in every project.'
-    },
-    {
-      icon: 'zap',
-      title: 'Fast Turnaround',
-      description: 'Efficient processes and dedicated project managers ensure on-time delivery even for urgent translation needs.'
-    },
-    {
-      icon: 'laptop',
-      title: 'Technology Integration',
-      description: 'Advanced translation tools and AI capabilities enhance consistency and efficiency while reducing costs.'
-    },
-    {
-      icon: 'shield',
-      title: 'Privacy',
-      description: 'Your documents are in safe hands. We adhere to strict confidentiality agreements and employ the latest in security technology.'
-    },
-    {
-      icon: 'clock',
-      title: '24/7 Availability',
-      description: 'Round-the-clock support and project management to accommodate different time zones and urgent requests.'
-    }
-  ],
-  'es': [
-    {
-      icon: 'globe-2',
-      title: 'Traductores Nativos',
-      description: 'Todas las traducciones son realizadas por profesionales nativos con experiencia específica en su industria.'
-    },
-    {
-      icon: 'check-circle',
-      title: 'Garantía de Calidad',
-      description: 'Control de calidad riguroso con múltiples etapas de revisión para asegurar precisión y consistencia en cada proyecto.'
-    },
-    {
-      icon: 'zap',
-      title: 'Entrega Rápida',
-      description: 'Procesos eficientes y gestores de proyectos dedicados garantizan entregas a tiempo incluso para necesidades urgentes.'
-    },
-    {
-      icon: 'laptop',
-      title: 'Integración Tecnológica',
-      description: 'Herramientas avanzadas de traducción y capacidades de IA mejoran la consistencia y eficiencia reduciendo costos.'
-    },
-    {
-      icon: 'shield',
-      title: 'Privacidad',
-      description: 'Sus documentos están en buenas manos. Seguimos acuerdos de confidencialidad estrictos con la última tecnología en seguridad.'
-    },
-    {
-      icon: 'clock',
-      title: 'Disponibilidad 24/7',
-      description: 'Soporte y gestión de proyectos las 24 horas para adaptarse a diferentes zonas horarias y solicitudes urgentes.'
-    }
-  ],
-  'fr': [
-    {
-      icon: 'globe-2',
-      title: 'Traducteurs Natifs',
-      description: 'Toutes les traductions sont effectuées par des professionnels de langue maternelle avec une expertise dans votre secteur.'
-    },
-    {
-      icon: 'check-circle',
-      title: 'Assurance Qualité',
-      description: 'Un contrôle de qualité rigoureux avec plusieurs étapes de révision assure précision et cohérence dans chaque projet.'
-    },
-    {
-      icon: 'zap',
-      title: 'Délais Rapides',
-      description: 'Des processus efficaces et des chefs de projet dédiés garantissent une livraison à temps, même pour les besoins urgents.'
-    },
-    {
-      icon: 'laptop',
-      title: 'Intégration Technologique',
-      description: 'Des outils de traduction avancés et des capacités d\'IA améliorent la cohérence et l\'efficacité tout en réduisant les coûts.'
-    },
-    {
-      icon: 'shield',
-      title: 'Confidentialité',
-      description: 'Vos documents sont entre de bonnes mains. Nous respectons des accords de confidentialité stricts avec la dernière technologie de sécurité.'
-    },
-    {
-      icon: 'clock',
-      title: 'Disponibilité 24/7',
-      description: 'Support et gestion de projet 24h/24 pour s\'adapter aux différents fuseaux horaires et aux demandes urgentes.'
-    }
-  ],
-  'de': [
-    {
-      icon: 'globe-2',
-      title: 'Muttersprachliche Übersetzer',
-      description: 'Alle Übersetzungen werden von Fachleuten mit muttersprachlichem Niveau und Fachwissen in Ihrer Branche durchgeführt.'
-    },
-    {
-      icon: 'check-circle',
-      title: 'Qualitätssicherung',
-      description: 'Strenge Qualitätskontrolle mit mehreren Überprüfungsphasen gewährleistet Genauigkeit und Konsistenz bei jedem Projekt.'
-    },
-    {
-      icon: 'zap',
-      title: 'Schnelle Bearbeitung',
-      description: 'Effiziente Prozesse und engagierte Projektmanager sorgen für pünktliche Lieferung auch bei dringenden Übersetzungsanforderungen.'
-    },
-    {
-      icon: 'laptop',
-      title: 'Technologische Integration',
-      description: 'Fortschrittliche Übersetzungstools und KI-Fähigkeiten verbessern die Konsistenz und Effizienz bei gleichzeitiger Kostenreduzierung.'
-    },
-    {
-      icon: 'shield',
-      title: 'Datenschutz',
-      description: 'Ihre Dokumente sind in sicheren Händen. Wir halten uns an strenge Vertraulichkeitsvereinbarungen und setzen modernste Sicherheitstechnologie ein.'
-    },
-    {
-      icon: 'clock',
-      title: '24/7 Verfügbarkeit',
-      description: 'Rund-um-die-Uhr-Support und Projektmanagement, um sich an verschiedene Zeitzonen und dringende Anfragen anzupassen.'
-    }
-  ],
-  'ca': [
-    {
-      icon: 'globe-2',
-      title: 'Traductors Nadius',
-      description: 'Totes les traduccions són realitzades per professionals nadius amb experiència específica en la seva indústria.'
-    },
-    {
-      icon: 'check-circle',
-      title: 'Garantia de Qualitat',
-      description: 'Control de qualitat rigorós amb múltiples etapes de revisió per assegurar precisió i consistència en cada projecte.'
-    },
-    {
-      icon: 'zap',
-      title: 'Lliurament Ràpid',
-      description: 'Processos eficients i gestors de projectes dedicats garanteixen lliuraments a temps fins i tot per a necessitats urgents.'
-    },
-    {
-      icon: 'laptop',
-      title: 'Integració Tecnològica',
-      description: 'Eines avançades de traducció i capacitats d\'IA milloren la consistència i eficiència reduint costos.'
-    },
-    {
-      icon: 'shield',
-      title: 'Privacitat',
-      description: 'Els seus documents estan en bones mans. Seguim acords de confidencialitat estrictes amb la darrera tecnologia en seguretat.'
-    },
-    {
-      icon: 'clock',
-      title: 'Disponibilitat 24/7',
-      description: 'Suport i gestió de projectes les 24 hores per adaptar-se a diferents zones horàries i sol·licituds urgents.'
-    }
-  ]
-};
-
-// Select features based on current locale or fallback to English
-const features = featureTranslations[currentLocale] || featureTranslations['en'];
-
+// Get the specific feature items translations for the current locale
+const featureItems = [
+  {
+    icon: 'globe-2',
+    title: t.components.features.items.nativeTranslators.title,
+    description: t.components.features.items.nativeTranslators.description
+  },
+  {
+    icon: 'check-circle',
+    title: t.components.features.items.qualityAssurance.title,
+    description: t.components.features.items.qualityAssurance.description
+  },
+  {
+    icon: 'zap',
+    title: t.components.features.items.fastTurnaround.title,
+    description: t.components.features.items.fastTurnaround.description
+  },
+  {
+    icon: 'laptop',
+    title: t.components.features.items.technologyIntegration.title,
+    description: t.components.features.items.technologyIntegration.description
+  },
+  {
+    icon: 'shield',
+    title: t.components.features.items.privacy.title,
+    description: t.components.features.items.privacy.description
+  },
+  {
+    icon: 'clock',
+    title: t.components.features.items.availability.title,
+    description: t.components.features.items.availability.description
+  }
+];
 ---
 
 <section id="features" class="py-20 bg-toast-50">
@@ -183,15 +49,15 @@ const features = featureTranslations[currentLocale] || featureTranslations['en']
     <div class="text-center mb-16">
       <span class="text-toast-600 font-semibold">Why Choose Us</span>
       <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mt-2 mb-4">
-        {sectionTitle}
+        {t.components.features.title}
       </h2>
       <p class="max-w-2xl mx-auto text-lg text-gray-600">
-        {sectionSubtitle}
+        {t.components.features.subtitle}
       </p>
     </div>
 
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {features.map(feature => (
+      {featureItems.map(feature => (
         <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-shadow">
           <div class="bg-toast-100 rounded-full w-14 h-14 flex items-center justify-center mb-6">
             <Icon name={feature.icon} class="h-7 w-7 text-toast-600" />

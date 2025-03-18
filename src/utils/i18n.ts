@@ -4,102 +4,106 @@ export type Locale = 'en' | 'es' | 'ca' | 'fr' | 'de';
 export const defaultLocale: Locale = 'en';
 export const supportedLocales: Locale[] = ['en', 'es', 'ca', 'fr', 'de'];
 
-// Define the translation dictionaries
-export const translations = {
+// Import the centralized translations
+import { translations } from './translations';
+
+// Legacy translation helpers for backward compatibility 
+// (so existing components won't break while we transition)
+export const legacyTranslations = {
   // Navigation
   'nav.services': {
-    en: 'Services',
-    es: 'Servicios',
-    ca: 'Serveis',
-    fr: 'Services',
-    de: 'Dienstleistungen',
+    en: translations.en.components.navigation.services,
+    es: translations.es.components.navigation.services,
+    ca: translations.ca.components.navigation.services,
+    fr: translations.fr.components.navigation.services,
+    de: translations.de.components.navigation.services,
   },
   'nav.industries': {
-    en: 'Industries',
-    es: 'Industrias',
-    ca: 'Indústries',
-    fr: 'Industries',
-    de: 'Branchen',
+    en: translations.en.components.navigation.industries,
+    es: translations.es.components.navigation.industries,
+    ca: translations.ca.components.navigation.industries,
+    fr: translations.fr.components.navigation.industries,
+    de: translations.de.components.navigation.industries,
   },
   'nav.blog': {
-    en: 'Blog',
-    es: 'Blog',
-    ca: 'Blog',
-    fr: 'Blog',
-    de: 'Blog',
+    en: translations.en.components.navigation.blog,
+    es: translations.es.components.navigation.blog,
+    ca: translations.ca.components.navigation.blog,
+    fr: translations.fr.components.navigation.blog,
+    de: translations.de.components.navigation.blog,
   },
   'nav.contact': {
-    en: 'Contact Us',
-    es: 'Contáctenos',
-    ca: 'Contacteu-nos',
-    fr: 'Contactez-nous',
-    de: 'Kontakt',
+    en: translations.en.components.navigation.contact,
+    es: translations.es.components.navigation.contact,
+    ca: translations.ca.components.navigation.contact,
+    fr: translations.fr.components.navigation.contact,
+    de: translations.de.components.navigation.contact,
   },
   
   // Hero section
   'hero.title': {
-    en: 'Professional Translation Services for Global Business',
-    es: 'Servicios Profesionales de Traducción para Negocios Globales',
-    ca: 'Serveis Professionals de Traducció per a Negocis Globals',
-    fr: 'Services Professionnels de Traduction pour les Entreprises Mondiales',
-    de: 'Professionelle Übersetzungsdienstleistungen für globale Unternehmen',
+    en: translations.en.pages.home.heroTitle,
+    es: translations.es.pages.home.heroTitle,
+    ca: translations.ca.pages.home.heroTitle,
+    fr: translations.fr.pages.home.heroTitle,
+    de: translations.de.pages.home.heroTitle,
   },
   'hero.subtitle': {
-    en: 'Connect with your international audience through precise, culturally nuanced translations in over 100 languages.',
-    es: 'Conecte con su audiencia internacional a través de traducciones precisas y culturalmente adecuadas en más de 100 idiomas.',
-    ca: 'Connecteu amb la vostra audiència internacional mitjançant traduccions precises i culturalment adequades en més de 100 idiomes.',
-    fr: 'Connectez-vous avec votre public international grâce à des traductions précises et culturellement nuancées dans plus de 100 langues.',
-    de: 'Erreichen Sie Ihr internationales Publikum durch präzise, kulturell nuancierte Übersetzungen in über 100 Sprachen.',
+    en: translations.en.pages.home.heroSubtitle,
+    es: translations.es.pages.home.heroSubtitle,
+    ca: translations.ca.pages.home.heroSubtitle,
+    fr: translations.fr.pages.home.heroSubtitle,
+    de: translations.de.pages.home.heroSubtitle,
   },
   
   // Common buttons
   'button.explore': {
-    en: 'Explore Services',
-    es: 'Explorar Servicios',
-    ca: 'Explorar Serveis',
-    fr: 'Explorer les Services',
-    de: 'Dienste erkunden',
+    en: translations.en.pages.home.exploreServices,
+    es: translations.es.pages.home.exploreServices,
+    ca: translations.ca.pages.home.exploreServices,
+    fr: translations.fr.pages.home.exploreServices,
+    de: translations.de.pages.home.exploreServices,
   },
   'button.contact': {
-    en: 'Get in Touch',
-    es: 'Contactar',
-    ca: 'Contactar',
-    fr: 'Nous contacter',
-    de: 'Kontakt',
+    en: translations.en.pages.home.getInTouch,
+    es: translations.es.pages.home.getInTouch,
+    ca: translations.ca.pages.home.getInTouch,
+    fr: translations.fr.pages.home.getInTouch,
+    de: translations.de.pages.home.getInTouch,
   },
   'button.learnMore': {
-    en: 'Learn More',
-    es: 'Más Información',
-    ca: 'Més Informació',
-    fr: 'En Savoir Plus',
-    de: 'Mehr erfahren',
+    en: translations.en.common.learnMore,
+    es: translations.es.common.learnMore,
+    ca: translations.ca.common.learnMore,
+    fr: translations.fr.common.learnMore,
+    de: translations.de.common.learnMore,
   },
   
   // Features section
   'features.title': {
-    en: 'Premium Translation Features',
-    es: 'Características Premium de Traducción',
-    ca: 'Característiques Premium de Traducció',
-    fr: 'Fonctionnalités de Traduction Premium',
-    de: 'Premium-Übersetzungsfunktionen',
+    en: translations.en.components.features.title,
+    es: translations.es.components.features.title,
+    ca: translations.ca.components.features.title,
+    fr: translations.fr.components.features.title,
+    de: translations.de.components.features.title,
   },
   'features.subtitle': {
-    en: 'Our professional translation services combine human expertise and cutting-edge technology to deliver exceptional results.',
-    es: 'Nuestros servicios profesionales de traducción combinan experiencia humana y tecnología de vanguardia para ofrecer resultados excepcionales.',
-    ca: 'Els nostres serveis professionals de traducció combinen experiència humana i tecnologia d\'avantguarda per oferir resultats excepcionals.',
-    fr: 'Nos services de traduction professionnelle combinent l\'expertise humaine et une technologie de pointe pour offrir des résultats exceptionnels.',
-    de: 'Unsere professionellen Übersetzungsdienste kombinieren menschliches Fachwissen und modernste Technologie, um außergewöhnliche Ergebnisse zu liefern.',
+    en: translations.en.components.features.subtitle,
+    es: translations.es.components.features.subtitle,
+    ca: translations.ca.components.features.subtitle,
+    fr: translations.fr.components.features.subtitle,
+    de: translations.de.components.features.subtitle,
   },
 };
 
-// Helper function to get a translation
-export function getTranslation(key: keyof typeof translations, locale: Locale): string {
-  if (!translations[key]) {
+// Helper function to get a translation (legacy)
+export function getTranslation(key: keyof typeof legacyTranslations, locale: Locale): string {
+  if (!legacyTranslations[key]) {
     console.warn(`Translation key not found: ${key}`);
     return key;
   }
   
-  return translations[key][locale] || translations[key][defaultLocale];
+  return legacyTranslations[key][locale] || legacyTranslations[key][defaultLocale];
 }
 
 // Helper to determine the locale from the URL
@@ -123,3 +127,10 @@ export function localizeURL(path: string, locale: Locale): string {
   // For other locales, add the locale prefix
   return `/${locale}/${cleanPath}`;
 }
+
+// Re-export the translation functions from the centralized translations file
+export { 
+  getPageTranslation,
+  getNestedTranslation,
+  getDeepTranslation 
+} from './translations';

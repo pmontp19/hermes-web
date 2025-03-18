@@ -8,8 +8,9 @@ import Contact from '../../components/Contact.astro';
 import Footer from '../../components/Footer.astro';
 import Pricing from '../../components/Pricing.astro';
 import BlogPreview from '../../components/BlogPreview.astro';
-import Button from '../../components/Button.astro';
+import Hero from '../../components/Hero.astro';
 import { supportedLocales, defaultLocale, type Locale } from '../../utils/i18n';
+import { translations } from '../../utils/translations';
 
 // Generate pages for all locales except the default (which is handled by the root index.astro)
 export function getStaticPaths() {
@@ -20,56 +21,12 @@ export function getStaticPaths() {
 
 const { lang } = Astro.params as { lang: Locale };
 
-// Import the same translations used in the root index.astro
-const translations = {
-  en: {
-    title: "Context - Professional Translation Services",
-    description: "Professional translation and localization services for businesses worldwide. Quality, speed, and privacy guaranteed across 100+ languages.",
-    heroTitle: "Professional Translation Services for Global Business",
-    heroSubtitle: "Connect with your international audience through precise, culturally nuanced translations in over 100 languages.",
-    exploreServices: "Explore Services",
-    getInTouch: "Get in Touch"
-  },
-  es: {
-    title: "Context - Servicios Profesionales de Traducción",
-    description: "Servicios profesionales de traducción y localización para empresas en todo el mundo. Calidad, rapidez y privacidad garantizadas en más de 100 idiomas.",
-    heroTitle: "Servicios Profesionales de Traducción para Negocios Globales",
-    heroSubtitle: "Conecte con su audiencia internacional a través de traducciones precisas y culturalmente adecuadas en más de 100 idiomas.",
-    exploreServices: "Explorar Servicios",
-    getInTouch: "Contactar"
-  },
-  ca: {
-    title: "Context - Serveis Professionals de Traducció",
-    description: "Serveis professionals de traducció i localització per a empreses d'arreu del món. Qualitat, rapidesa i privacitat garantides en més de 100 idiomes.",
-    heroTitle: "Serveis Professionals de Traducció per a Negocis Globals",
-    heroSubtitle: "Connecteu amb la vostra audiència internacional mitjançant traduccions precises i culturalment adequades en més de 100 idiomes.",
-    exploreServices: "Explorar Serveis",
-    getInTouch: "Contactar"
-  },
-  fr: {
-    title: "Context - Services Professionnels de Traduction",
-    description: "Services professionnels de traduction et de localisation pour les entreprises du monde entier. Qualité, rapidité et confidentialité garanties dans plus de 100 langues.",
-    heroTitle: "Services Professionnels de Traduction pour les Entreprises Mondiales",
-    heroSubtitle: "Connectez-vous avec votre public international grâce à des traductions précises et culturellement nuancées dans plus de 100 langues.",
-    exploreServices: "Explorer les Services",
-    getInTouch: "Nous contacter"
-  },
-  de: {
-    title: "Context - Professionelle Übersetzungsdienstleistungen",
-    description: "Professionelle Übersetzungs- und Lokalisierungsdienste für Unternehmen weltweit. Qualität, Geschwindigkeit und Datenschutz in über 100 Sprachen garantiert.",
-    heroTitle: "Professionelle Übersetzungsdienstleistungen für globale Unternehmen",
-    heroSubtitle: "Erreichen Sie Ihr internationales Publikum durch präzise, kulturell nuancierte Übersetzungen in über 100 Sprachen.",
-    exploreServices: "Dienste erkunden",
-    getInTouch: "Kontakt"
-  }
-};
-
-// Use translations based on language, with fallback to English
+// Use translations from the centralized file
 const t = translations[lang] || translations[defaultLocale];
 
 // Meta tags for the home page
-const title = t.title;
-const description = t.description;
+const title = t.meta.title;
+const description = t.meta.description;
 const image = "/images/home-social-card.jpg";
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
@@ -143,42 +100,7 @@ const schemaData = {
   <Header />
   <main>
     <div class="fade-in-section">
-      <section class="relative pt-20 pb-32 bg-gradient-to-br from-toast-600 to-toast-800 text-white overflow-hidden">
-        <!-- Animated grid background -->
-        <div class="absolute inset-0 z-0">
-          <div class="grid-animation"></div>
-        </div>
-        
-        <div class="container mx-auto px-4 relative z-10">
-          <div class="max-w-3xl mx-auto text-center mb-12">
-            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-              {t.heroTitle}
-            </h1>
-            
-            <p class="text-xl md:text-2xl text-toast-50 mb-10">
-              {t.heroSubtitle}
-            </p>
-            
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-              <Button 
-                href="#services"
-                variant="secondary"
-                size="lg"
-              >
-                {t.exploreServices}
-              </Button>
-              
-              <Button 
-                href="#contact" 
-                variant="primary"
-                size="lg"
-              >
-                {t.getInTouch}
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+      <Hero />
     </div>
     <div class="fade-in-section"><Features /></div>
     <div class="fade-in-section"><Services /></div>

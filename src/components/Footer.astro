@@ -2,8 +2,16 @@
 import Button from './Button.astro';
 import Icon from './Icon.astro';
 import LanguageSwitcher from './LanguageSwitcher.astro';
+import { getLocaleFromURL, localizeURL, type Locale } from '../utils/i18n';
+import { translations } from '../utils/translations';
 
 const currentYear = new Date().getFullYear();
+
+// Get current locale from URL
+const currentLocale = getLocaleFromURL(Astro.url.pathname) as Locale;
+
+// Get translations from the centralized file
+const t = translations[currentLocale];
 ---
 
 <footer class="bg-toast-700 text-white">
@@ -11,8 +19,8 @@ const currentYear = new Date().getFullYear();
     <div class="grid md:grid-cols-4 gap-8">
       <!-- Company Info -->
       <div class="col-span-1">
-        <a href="/" class="text-2xl font-bold mb-4 inline-block">Context</a>
-        <p class="text-toast-100 mb-4">Breaking language barriers and connecting worlds with professional translation services.</p>
+        <a href={localizeURL('', currentLocale)} class="text-2xl font-bold mb-4 inline-block">Context</a>
+        <p class="text-toast-100 mb-4">{t.components.footer.tagline}</p>
         <div class="flex space-x-4">
           <Button href="#" variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">
             <Icon name="linkedin" class="h-5 w-5" />
@@ -31,30 +39,30 @@ const currentYear = new Date().getFullYear();
       
       <!-- Quick Links -->
       <div>
-        <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+        <h3 class="text-lg font-semibold mb-4">{t.components.footer.quickLinks}</h3>
         <ul class="space-y-2">
           <li><Button href="#features" variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">Features</Button></li>
-          <li><Button href="#services" variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">Services</Button></li>
+          <li><Button href="#services" variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">{t.components.navigation.services}</Button></li>
           <li><Button href="#pricing" variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">Pricing</Button></li>
-          <li><Button href="#contact" variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">Contact Us</Button></li>
+          <li><Button href="#contact" variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">{t.components.navigation.contact}</Button></li>
         </ul>
       </div>
       
       <!-- Services -->
       <div>
-        <h3 class="text-lg font-semibold mb-4">Our Services</h3>
+        <h3 class="text-lg font-semibold mb-4">{t.components.footer.services}</h3>
         <ul class="space-y-2">
-          <li><Button href="#" variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">Document Translation</Button></li>
-          <li><Button href="#" variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">Website Localization</Button></li>
-          <li><Button href="#" variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">Software Localization</Button></li>
-          <li><Button href="#" variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">Marketing Translation</Button></li>
-          <li><Button href="#" variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">Audio/Video Translation</Button></li>
+          <li><Button href={`${localizeURL('services', currentLocale)}/translation`} variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">Document Translation</Button></li>
+          <li><Button href={`${localizeURL('services', currentLocale)}/website-localization`} variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">Website Localization</Button></li>
+          <li><Button href={`${localizeURL('services', currentLocale)}/software-localization`} variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">Software Localization</Button></li>
+          <li><Button href={`${localizeURL('services', currentLocale)}/marketing-translation`} variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">Marketing Translation</Button></li>
+          <li><Button href={`${localizeURL('services', currentLocale)}/subtitling`} variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">Audio/Video Translation</Button></li>
         </ul>
       </div>
       
       <!-- Contact Info -->
       <div>
-        <h3 class="text-lg font-semibold mb-4">Contact Info</h3>
+        <h3 class="text-lg font-semibold mb-4">{t.components.footer.contactInfo}</h3>
         <ul class="space-y-3">
           <li class="flex items-start">
             <Icon name="map-pin" class="h-5 w-5 text-toast-100 mr-2 mt-0.5" />
@@ -77,11 +85,11 @@ const currentYear = new Date().getFullYear();
     
     <!-- Copyright, Legal & Language Switcher -->
     <div class="flex flex-col md:flex-row justify-between items-center">
-      <p class="text-toast-100 mb-4 md:mb-0">&copy; {currentYear} Context. All rights reserved.</p>
+      <p class="text-toast-100 mb-4 md:mb-0">&copy; {currentYear} Context. {t.components.footer.copyright}</p>
       <div class="flex flex-col sm:flex-row items-center gap-4">
         <div class="flex space-x-6">
-          <Button href="/legal/privacy-cookie-policy" variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">Privacy Policy</Button>
-          <Button href="/legal/legal-mentions" variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">Legal Mentions</Button>
+          <Button href={localizeURL('legal/privacy-cookie-policy', currentLocale)} variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">{t.components.footer.privacyPolicy}</Button>
+          <Button href={localizeURL('legal/legal-mentions', currentLocale)} variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">{t.components.footer.legalMentions}</Button>
         </div>
         <LanguageSwitcher class="mt-4 sm:mt-0 sm:ml-6" />
       </div>

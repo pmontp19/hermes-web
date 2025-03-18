@@ -1,7 +1,8 @@
 ---
 import Button from './Button.astro';
 import Icon from './Icon.astro';
-import { getLocaleFromURL, localizeURL, getTranslation, type Locale } from '../utils/i18n';
+import { getLocaleFromURL, localizeURL, type Locale } from '../utils/i18n';
+import { translations } from '../utils/translations';
 
 const SITE = {
   name: "Context"
@@ -15,21 +16,18 @@ const servicesUrl = localizeURL('services', currentLocale);
 const industriesUrl = localizeURL('industries', currentLocale);
 const blogUrl = localizeURL('blog', currentLocale);
 
-// Get translated labels for navigation
-const servicesLabel = getTranslation('nav.services', currentLocale);
-const industriesLabel = getTranslation('nav.industries', currentLocale);
-const blogLabel = getTranslation('nav.blog', currentLocale);
-const contactLabel = getTranslation('nav.contact', currentLocale);
+// Get translations from the centralized file
+const t = translations[currentLocale];
 ---
 
 <header class="fixed w-full bg-white/90 backdrop-blur-sm z-50 border-b border-slate-100">
   <nav class="container mx-auto px-4 py-3 flex justify-between items-center">
     <a href={localizeURL('', currentLocale)} class="text-xl font-bold text-slate-900">{SITE.name}</a>
     <div class="hidden md:flex items-center space-x-4">
-      <Button href={servicesUrl} variant="link">{servicesLabel}</Button>
-      <Button href={industriesUrl} variant="link">{industriesLabel}</Button>
-      <Button href={blogUrl} variant="link">{blogLabel}</Button>
-      <Button href="#contact" variant="primary">{contactLabel}</Button>
+      <Button href={servicesUrl} variant="link">{t.components.navigation.services}</Button>
+      <Button href={industriesUrl} variant="link">{t.components.navigation.industries}</Button>
+      <Button href={blogUrl} variant="link">{t.components.navigation.blog}</Button>
+      <Button href="#contact" variant="primary">{t.components.navigation.contact}</Button>
     </div>
     <button 
       id="mobile-menu-button"
@@ -43,10 +41,10 @@ const contactLabel = getTranslation('nav.contact', currentLocale);
   <!-- Mobile menu -->
   <div id="mobile-menu" class="md:hidden bg-white hidden absolute w-full border-b border-gray-200">
     <div class="container mx-auto px-4 py-4 flex flex-col space-y-3">
-      <Button href={servicesUrl} variant="link">{servicesLabel}</Button>
-      <Button href={industriesUrl} variant="link">{industriesLabel}</Button>
-      <Button href={blogUrl} variant="link">{blogLabel}</Button>
-      <Button href="#contact" variant="primary" fullWidth>{contactLabel}</Button>
+      <Button href={servicesUrl} variant="link">{t.components.navigation.services}</Button>
+      <Button href={industriesUrl} variant="link">{t.components.navigation.industries}</Button>
+      <Button href={blogUrl} variant="link">{t.components.navigation.blog}</Button>
+      <Button href="#contact" variant="primary" fullWidth>{t.components.navigation.contact}</Button>
     </div>
   </div>
 </header>

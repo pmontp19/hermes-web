@@ -1,101 +1,164 @@
 ---
 import Button from './Button.astro';
 import Icon from './Icon.astro';
+import { getLocaleFromURL, type Locale } from '../utils/i18n';
+import { translations } from '../utils/translations';
+
+// Get current locale from URL
+const currentLocale = getLocaleFromURL(Astro.url.pathname) as Locale;
+
+// Get translations from the centralized file
+const t = translations[currentLocale];
 ---
 
-<section id="contact" class="py-20 bg-gray-50">
+<section id="contact" class="py-20 bg-white">
   <div class="container mx-auto px-4">
-    <div class="max-w-4xl mx-auto">
+    <div class="max-w-5xl mx-auto">
       <div class="text-center mb-16">
         <span class="text-toast-600 font-semibold">Get in Touch</span>
-        <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mt-2 mb-4">
-          Contact Us
+        <h2 class="text-3xl md:text-4xl font-bold mt-2 mb-4 text-gray-800">
+          {t.components.contact.title}
         </h2>
-        <p class="text-gray-600">
-          Have questions or need a quote? Drop us a message and we'll get back to
-          you shortly.
+        <p class="max-w-2xl mx-auto text-lg text-gray-600">
+          {t.components.contact.subtitle}
         </p>
       </div>
-
-      <form class="bg-white rounded-xl shadow-md p-8 mb-8">
-        <div class="grid md:grid-cols-2 gap-6 mb-6">
-          <div>
-            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-toast-500 focus:border-toast-500"
-              required
-            />
-          </div>
-          <div>
-            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-toast-500 focus:border-toast-500"
-              required
-            />
-          </div>
-        </div>
-        
-        <div>
-          <label for="subject" class="block text-sm font-medium text-gray-700 mb-1">Subject</label>
-          <input
-            type="text"
-            id="subject"
-            name="subject"
-            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-toast-500 focus:border-toast-500"
-            required
-          />
-        </div>
-        
-        <div class="mt-6">
-          <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Message</label>
-          <textarea
-            id="message"
-            name="message"
-            rows="5"
-            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-toast-500 focus:border-toast-500"
-            required
-          ></textarea>
-        </div>
-        
-        <div class="text-center mt-8">
-          <Button type="submit" variant="primary" size="lg" class="inline-flex items-center">
-            Send Message
-            <Icon name="arrow-right" class="h-5 w-5 ml-2" />
-          </Button>
-        </div>
-      </form>
       
-      <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-        <div>
-          <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-toast-100 text-toast-600 mb-4">
-            <Icon name="phone" class="h-6 w-6" />
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Contact Info -->
+        <div class="bg-toast-50 rounded-xl p-8">
+          <h3 class="font-semibold text-xl mb-6">Contact Information</h3>
+          <div class="space-y-6">
+            <div class="flex items-start">
+              <div class="bg-white p-3 rounded-lg shadow-sm mr-4">
+                <Icon name="map-pin" class="h-6 w-6 text-toast-600" />
+              </div>
+              <div>
+                <p class="font-medium text-gray-900">Office Location</p>
+                <p class="text-gray-600">123 Translation Way, New York, NY 10001</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start">
+              <div class="bg-white p-3 rounded-lg shadow-sm mr-4">
+                <Icon name="phone" class="h-6 w-6 text-toast-600" />
+              </div>
+              <div>
+                <p class="font-medium text-gray-900">Phone</p>
+                <p class="text-gray-600">+1 (555) 123-4567</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start">
+              <div class="bg-white p-3 rounded-lg shadow-sm mr-4">
+                <Icon name="mail" class="h-6 w-6 text-toast-600" />
+              </div>
+              <div>
+                <p class="font-medium text-gray-900">Email</p>
+                <p class="text-gray-600">info@context.com</p>
+              </div>
+            </div>
           </div>
-          <h3 class="font-semibold text-gray-800">Phone</h3>
-          <p class="text-gray-600 mt-1">+1 (555) 123-4567</p>
+          
+          <div class="mt-8 border-t border-gray-200 pt-6">
+            <h4 class="font-medium mb-4">Follow Us</h4>
+            <div class="flex space-x-3">
+              <a href="#" class="bg-white p-2 rounded-full hover:bg-toast-100 transition-colors">
+                <Icon name="linkedin" class="h-5 w-5 text-toast-600" />
+              </a>
+              <a href="#" class="bg-white p-2 rounded-full hover:bg-toast-100 transition-colors">
+                <Icon name="twitter" class="h-5 w-5 text-toast-600" />
+              </a>
+              <a href="#" class="bg-white p-2 rounded-full hover:bg-toast-100 transition-colors">
+                <Icon name="facebook" class="h-5 w-5 text-toast-600" />
+              </a>
+              <a href="#" class="bg-white p-2 rounded-full hover:bg-toast-100 transition-colors">
+                <Icon name="instagram" class="h-5 w-5 text-toast-600" />
+              </a>
+            </div>
+          </div>
         </div>
         
-        <div>
-          <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-toast-100 text-toast-600 mb-4">
-            <Icon name="mail" class="h-6 w-6" />
-          </div>
-          <h3 class="font-semibold text-gray-800">Email</h3>
-          <p class="text-gray-600 mt-1">info@translatehub.com</p>
-        </div>
-        
-        <div>
-          <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-toast-100 text-toast-600 mb-4">
-            <Icon name="map-pin" class="h-6 w-6" />
-          </div>
-          <h3 class="font-semibold text-gray-800">Location</h3>
-          <p class="text-gray-600 mt-1">San Francisco, CA</p>
+        <!-- Contact Form -->
+        <div class="md:col-span-2 bg-white border border-gray-100 rounded-xl p-8 shadow-sm">
+          <form class="space-y-6" id="contactForm">
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <label for="name" class="block text-sm font-medium text-gray-700 mb-1">{t.components.contact.form.name}</label>
+                <input 
+                  type="text" 
+                  id="name" 
+                  name="name" 
+                  class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-toast-500 focus:border-toast-500" 
+                  required
+                />
+              </div>
+              <div>
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">{t.components.contact.form.email}</label>
+                <input 
+                  type="email" 
+                  id="email" 
+                  name="email" 
+                  class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-toast-500 focus:border-toast-500" 
+                  required
+                />
+              </div>
+            </div>
+            
+            <div>
+              <label for="subject" class="block text-sm font-medium text-gray-700 mb-1">{t.components.contact.form.subject}</label>
+              <input 
+                type="text" 
+                id="subject" 
+                name="subject" 
+                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-toast-500 focus:border-toast-500"
+              />
+            </div>
+            
+            <div>
+              <label for="message" class="block text-sm font-medium text-gray-700 mb-1">{t.components.contact.form.message}</label>
+              <textarea 
+                id="message" 
+                name="message" 
+                rows="5" 
+                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-toast-500 focus:border-toast-500"
+                required
+              ></textarea>
+            </div>
+            
+            <div>
+              <Button type="submit" variant="primary" fullWidth>
+                <Icon name="send" class="h-4 w-4 mr-2" />
+                {t.components.contact.form.send}
+              </Button>
+            </div>
+            
+            <div id="formStatus" class="hidden"></div>
+          </form>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<script>
+  const contactForm = document.getElementById('contactForm') as HTMLFormElement;
+  const formStatus = document.getElementById('formStatus');
+  
+  if (contactForm && formStatus) {
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      formStatus.textContent = "Sending...";
+      formStatus.className = "mt-4 py-2 px-4 bg-blue-50 text-blue-800 rounded-md";
+      formStatus.classList.remove('hidden');
+      
+      // Simulate API call with timeout
+      setTimeout(() => {
+        formStatus.textContent = "Your message has been sent. We'll get back to you soon!";
+        formStatus.className = "mt-4 py-2 px-4 bg-green-50 text-green-800 rounded-md";
+        contactForm.reset();
+      }, 1500);
+    });
+  }
+</script>
