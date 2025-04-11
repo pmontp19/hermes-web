@@ -1,0 +1,156 @@
+---
+import { cn } from "../../lib/utils";
+
+interface Props {
+  /**
+   * Button variant
+   * @default "default"
+   */
+  variant?: "default" | "primary" | "secondary" | "destructive" | "outline" | "ghost" | "link";
+  /**
+   * Optional size
+   * @default "default"
+   */
+  size?: "default" | "sm" | "lg" | "icon";
+  /**
+   * Optional class name
+   */
+  class?: string;
+  /**
+   * If true, the icon will be shown after the text
+   * @default false
+   */
+  iconRight?: boolean;
+  /**
+   * If true, the button will take up the full width
+   * @default false
+   */
+  fullWidth?: boolean;
+  /**
+   * Button type
+   * @default "button"
+   */
+  type?: "button" | "submit" | "reset";
+  /**
+   * If true, the button will be disabled
+   * @default false
+   */
+  disabled?: boolean;
+  /**
+   * If provided, the button will render as an anchor element with this URL
+   */
+  href?: string;
+  /**
+   * Optional target for the anchor element
+   */
+  target?: string;
+  /**
+   * Optional rel attribute for the anchor element
+   */
+  rel?: string;
+}
+
+const {
+  variant = "default",
+  size = "default",
+  class: className = "",
+  iconRight = false,
+  fullWidth = false,
+  type = "button",
+  disabled = false,
+  href,
+  target,
+  rel,
+  ...rest
+} = Astro.props;
+
+// Define button styles as an object with variants, similar to a class-variance-authority structure
+const buttonStyles = {
+  // Base classes shared by all variants
+  base: "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  
+  // Variants for different button styles
+  variants: {
+    variant: {
+      default: "bg-primary text-primary-foreground hover:bg-primary/90",
+      primary: "bg-primary text-primary-foreground hover:bg-primary/90",
+      destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+      outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+      secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+      ghost: "hover:bg-accent hover:text-accent-foreground",
+      link: "text-primary underline-offset-4 hover:underline",
+    },
+    size: {
+      default: "h-10 px-4 py-2",
+      sm: "h-9 rounded-md px-3",
+      lg: "h-11 rounded-md px-8",
+      icon: "h-10 w-10",
+    }
+  },
+  
+  // Default variants when none specified
+  defaultVariants: {
+    variant: "default",
+    size: "default",
+  }
+};
+
+// Use cn utility function to merge all classes
+const buttonClasses = cn(
+  buttonStyles.base,
+  buttonStyles.variants.size[size],
+  buttonStyles.variants.variant[variant],
+  disabled && "opacity-50 pointer-events-none",
+  fullWidth && "w-full",
+  className
+);
+
+// Determine which attributes should be included based on element type
+const commonProps = {
+  class: buttonClasses,
+  ...rest
+};
+
+const buttonProps = {
+  type,
+  disabled,
+  ...commonProps
+};
+
+const linkProps = {
+  href,
+  target,
+  rel: rel || (target === '_blank' ? 'noopener noreferrer' : undefined),
+  ...commonProps
+};
+---
+
+{href ? (
+  <a {...linkProps}>
+    {!iconRight && (
+      <slot name="icon-left">
+        {size === "icon" && <slot />}
+      </slot>
+    )}
+    
+    {size !== "icon" && <slot />}
+    
+    {iconRight && (
+      <slot name="icon-right" />
+    )}
+  </a>
+) : (
+  <button {...buttonProps}>
+    {!iconRight && (
+      <slot name="icon-left">
+        {size === "icon" && <slot />}
+      </slot>
+    )}
+    
+    {size !== "icon" && <slot />}
+    
+    {iconRight && (
+      <slot name="icon-right" />
+    )}
+  </button>
+)}

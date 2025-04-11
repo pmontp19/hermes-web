@@ -1,5 +1,5 @@
 ---
-import Button from './Button.astro';
+import Button from '@/components/ui/Button.astro';
 import Icon from './Icon.astro';
 import LanguageSwitcher from './LanguageSwitcher.astro';
 import { getLocaleFromURL, localizeURL, type Locale } from '../utils/i18n';
@@ -22,16 +22,16 @@ const t = translations[currentLocale];
         <a href={localizeURL('', currentLocale)} class="text-2xl font-bold mb-4 inline-block">Context</a>
         <p class="text-toast-100 mb-4">{t.components.footer.tagline}</p>
         <div class="flex space-x-4">
-          <Button href="#" variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">
+          <Button href="#" variant="link" class="text-toast-100 hover:text-white !p-0">
             <Icon name="linkedin" class="h-5 w-5" />
           </Button>
-          <Button href="#" variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">
+          <Button href="#" variant="link" class="text-toast-100 hover:text-white !p-0">
             <Icon name="twitter" class="h-5 w-5" />
           </Button>
-          <Button href="#" variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">
+          <Button href="#" variant="link" class="text-toast-100 hover:text-white !p-0">
             <Icon name="facebook" class="h-5 w-5" />
           </Button>
-          <Button href="#" variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">
+          <Button href="#" variant="link" class="text-toast-100 hover:text-white !p-0">
             <Icon name="instagram" class="h-5 w-5" />
           </Button>
         </div>
@@ -41,10 +41,10 @@ const t = translations[currentLocale];
       <div>
         <h3 class="text-lg font-semibold mb-4">{t.components.footer.quickLinks}</h3>
         <ul class="space-y-2">
-          <li><Button href="#features" variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">Features</Button></li>
-          <li><Button href="#services" variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">{t.components.navigation.services}</Button></li>
-          <li><Button href="#pricing" variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">Pricing</Button></li>
-          <li><Button href="#contact" variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">{t.components.navigation.contact}</Button></li>
+          <li><Button href="#features" variant="link" class="text-toast-100 hover:text-white !p-0">Features</Button></li>
+          <li><Button href="#services" variant="link" class="text-toast-100 hover:text-white !p-0">{t.components.navigation.services}</Button></li>
+          <li><Button href="#pricing" variant="link" class="text-toast-100 hover:text-white !p-0">Pricing</Button></li>
+          <li><Button href="#contact" variant="link" class="text-toast-100 hover:text-white !p-0">{t.components.navigation.contact}</Button></li>
         </ul>
       </div>
       
@@ -52,11 +52,11 @@ const t = translations[currentLocale];
       <div>
         <h3 class="text-lg font-semibold mb-4">{t.components.footer.services}</h3>
         <ul class="space-y-2">
-          <li><Button href={`${localizeURL('services', currentLocale)}/translation`} variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">Document Translation</Button></li>
-          <li><Button href={`${localizeURL('services', currentLocale)}/website-localization`} variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">Website Localization</Button></li>
-          <li><Button href={`${localizeURL('services', currentLocale)}/software-localization`} variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">Software Localization</Button></li>
-          <li><Button href={`${localizeURL('services', currentLocale)}/marketing-translation`} variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">Marketing Translation</Button></li>
-          <li><Button href={`${localizeURL('services', currentLocale)}/subtitling`} variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">Audio/Video Translation</Button></li>
+          <li><Button href={`${localizeURL('services', currentLocale)}/translation`} variant="link" class="text-toast-100 hover:text-white !p-0">Document Translation</Button></li>
+          <li><Button href={`${localizeURL('services', currentLocale)}/website-localization`} variant="link" class="text-toast-100 hover:text-white !p-0">Website Localization</Button></li>
+          <li><Button href={`${localizeURL('services', currentLocale)}/software-localization`} variant="link" class="text-toast-100 hover:text-white !p-0">Software Localization</Button></li>
+          <li><Button href={`${localizeURL('services', currentLocale)}/marketing-translation`} variant="link" class="text-toast-100 hover:text-white !p-0">Marketing Translation</Button></li>
+          <li><Button href={`${localizeURL('services', currentLocale)}/subtitling`} variant="link" class="text-toast-100 hover:text-white !p-0">Audio/Video Translation</Button></li>
         </ul>
       </div>
       
@@ -88,8 +88,8 @@ const t = translations[currentLocale];
       <p class="text-toast-100 mb-4 md:mb-0">&copy; {currentYear} Context. {t.components.footer.copyright}</p>
       <div class="flex flex-col sm:flex-row items-center gap-4">
         <div class="flex space-x-6">
-          <Button href={localizeURL('legal/privacy-cookie-policy', currentLocale)} variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">{t.components.footer.privacyPolicy}</Button>
-          <Button href={localizeURL('legal/legal-mentions', currentLocale)} variant="linkSecondary" class="text-toast-100 hover:text-white !p-0">{t.components.footer.legalMentions}</Button>
+          <Button href={localizeURL('legal/privacy-cookie-policy', currentLocale)} variant="link" class="text-toast-100 hover:text-white !p-0">{t.components.footer.privacyPolicy}</Button>
+          <Button href={localizeURL('legal/legal-mentions', currentLocale)} variant="link" class="text-toast-100 hover:text-white !p-0">{t.components.footer.legalMentions}</Button>
         </div>
         <LanguageSwitcher class="mt-4 sm:mt-0 sm:ml-6" />
       </div>

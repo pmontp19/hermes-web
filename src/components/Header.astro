@@ -1,67 +1,125 @@
 ---
-import Button from './Button.astro';
-import Icon from './Icon.astro';
-import { getLocaleFromURL, localizeURL, type Locale } from '../utils/i18n';
-import { translations } from '../utils/translations';
+import Button from "@/components/ui/Button.astro";
+import Icon from "./Icon.astro";
+import { getLocaleFromURL, localizeURL, type Locale } from "../utils/i18n";
+import { translations } from "../utils/translations";
 
 const SITE = {
-  name: "Context"
+  name: "Context",
 };
 
 // Get current locale from URL
 const currentLocale = getLocaleFromURL(Astro.url.pathname) as Locale;
 
 // Get localized paths for navigation links
-const servicesUrl = localizeURL('services', currentLocale);
-const industriesUrl = localizeURL('industries', currentLocale);
-const blogUrl = localizeURL('blog', currentLocale);
+const servicesUrl = localizeURL("services", currentLocale);
+const industriesUrl = localizeURL("industries", currentLocale);
+const blogUrl = localizeURL("blog", currentLocale);
 
 // Get translations from the centralized file
 const t = translations[currentLocale];
 ---
 
-<header class="fixed w-full bg-white/90 backdrop-blur-sm z-50 border-b border-slate-100">
-  <nav class="container mx-auto px-4 py-3 flex justify-between items-center">
-    <a href={localizeURL('', currentLocale)} class="text-xl font-bold text-slate-900">{SITE.name}</a>
-    <div class="hidden md:flex items-center space-x-4">
-      <Button href={servicesUrl} variant="link">{t.components.navigation.services}</Button>
-      <Button href={industriesUrl} variant="link">{t.components.navigation.industries}</Button>
-      <Button href={blogUrl} variant="link">{t.components.navigation.blog}</Button>
-      <Button href="#contact" variant="primary">{t.components.navigation.contact}</Button>
-    </div>
-    <button 
+<header
+  class="fixed w-full bg-white/90 backdrop-blur-sm z-50 border-b border-slate-100 py-4"
+>
+  <div class="container mx-auto px-8 flex justify-between items-center">
+    <a href={localizeURL("", currentLocale)} class="flex items-center gap-2">
+      <Icon name="globe" class="h-8 w-8 text-context-blue" />
+      <span class="text-2xl font-bold text-context-light"
+        >{SITE.name}<span class="text-context-accent">.</span></span
+      >
+    </a>
+
+    <nav class="hidden md:flex items-center gap-8">
+      <div class="hidden md:flex items-center space-x-4">
+        <a
+          href={servicesUrl}
+          class="text-context-light hover:text-context-accent transition-colors"
+          >{t.components.navigation.services}</a
+        >
+        <a
+          href={industriesUrl}
+          class="text-context-light hover:text-context-accent transition-colors"
+          >{t.components.navigation.industries}</a
+        >
+        <a
+          href={blogUrl}
+          class="text-context-light hover:text-context-accent transition-colors"
+          >{t.components.navigation.blog}</a
+        >
+        <Button href="#contact" variant="primary"
+          >{t.components.navigation.contact}</Button
+        >
+      </div>
+    </nav>
+    <button
       id="mobile-menu-button"
       class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
       aria-label="Menu"
     >
-      <Icon name="menu" class="h-6 w-6" />
-    </button>
-  </nav>
+    <Icon name="x" class="h-6 w-6 hidden" />
+    <Icon name="menu" class="h-6 w-6" />
+  </button>
 
-  <!-- Mobile menu -->
-  <div id="mobile-menu" class="md:hidden bg-white hidden absolute w-full border-b border-gray-200">
-    <div class="container mx-auto px-4 py-4 flex flex-col space-y-3">
-      <Button href={servicesUrl} variant="link">{t.components.navigation.services}</Button>
-      <Button href={industriesUrl} variant="link">{t.components.navigation.industries}</Button>
-      <Button href={blogUrl} variant="link">{t.components.navigation.blog}</Button>
-      <Button href="#contact" variant="primary" fullWidth>{t.components.navigation.contact}</Button>
+    <!-- Mobile menu -->
+    <div
+      id="mobile-menu"
+      class="absolute top-full left-0 right-0 bg-white shadow-md py-4 md:hidden hidden"
+    >
+      <div class="container mx-auto px-4 py-4 flex flex-col space-y-3">
+        <a
+          href={servicesUrl}
+          class="text-context-light hover:text-context-accent transition-colors"
+          >{t.components.navigation.services}</a
+        >
+        <a
+          href={industriesUrl}
+          class="text-context-light hover:text-context-accent transition-colors"
+          >{t.components.navigation.industries}</a
+        >
+        <a
+          href={blogUrl}
+          class="text-context-light hover:text-context-accent transition-colors"
+          >{t.components.navigation.blog}</a
+        >
+        <Button href="#contact" variant="primary"
+          >{t.components.navigation.contact}</Button
+        >
+      </div>
     </div>
   </div>
 </header>
 
 <script>
   // Mobile menu toggle
-  const menuButton = document.getElementById('mobile-menu-button');
-  const mobileMenu = document.getElementById('mobile-menu');
+  const menuButton = document.getElementById("mobile-menu-button");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const closeIcon = document.querySelector("[data-lucide='x']");
+  const menuIcon = document.querySelector("[data-lucide='menu']");
   
-  menuButton?.addEventListener('click', () => {
-    mobileMenu?.classList.toggle('hidden');
+  // Toggle icons
+  menuButton?.addEventListener("click", () => {
+    if (mobileMenu?.classList.contains("hidden")) {
+      closeIcon?.classList.remove("hidden");
+      menuIcon?.classList.add("hidden");
+    } else {
+      closeIcon?.classList.add("hidden");
+      menuIcon?.classList.remove("hidden");
+    }
   });
-  
+
+  menuButton?.addEventListener("click", () => {
+    mobileMenu?.classList.toggle("hidden");
+  });
+
   // Close mobile menu when clicking outside
-  document.addEventListener('click', (event) => {
-    if (!menuButton?.contains(event.target as Node) && !mobileMenu?.contains(event.target as Node)) {
-      mobileMenu?.classList.add('hidden');
+  document.addEventListener("click", (event) => {
+    if (
+      !menuButton?.contains(event.target as Node) &&
+      !mobileMenu?.contains(event.target as Node)
+    ) {
+      mobileMenu?.classList.add("hidden");
     }
   });
 </script>
